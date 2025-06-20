@@ -1,11 +1,80 @@
 @import 'tailwindcss';
 
+/* Required by all components */
+@import '../../vendor/filament/support/resources/css/index.css';
+
+/* Required by actions and tables */
+@import '../../vendor/filament/actions/resources/css/index.css';
+
+/* Required by actions, forms and tables */
+@import '../../vendor/filament/forms/resources/css/index.css';
+
+/* Required by actions and infolists */
+@import '../../vendor/filament/infolists/resources/css/index.css';
+
+/* Required by notifications */
+@import '../../vendor/filament/notifications/resources/css/index.css';
+
+/* Required by actions, infolists, forms, schemas and tables */
+@import '../../vendor/filament/schemas/resources/css/index.css';
+
+/* Required by tables */
+@import '../../vendor/filament/tables/resources/css/index.css';
+
+/* Required by widgets */
+@import '../../vendor/filament/widgets/resources/css/index.css';
+
+@variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+
+@plugin '@tailwindcss/typography';
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    'Segoe UI Symbol', 'Noto Color Emoji';
+
+
+    --color-primary-50: oklch(0.984 0.014 180.72);
+    --color-primary-100: oklch(0.953 0.051 180.801);
+    --color-primary-200: oklch(0.91 0.096 180.426);
+    --color-primary-300: oklch(0.855 0.138 181.071);
+    --color-primary-400: oklch(0.777 0.152 181.912);
+    --color-primary-500: oklch(0.704 0.14 182.503);
+    --color-primary-600: oklch(0.6 0.118 184.704);
+    --color-primary-700: oklch(0.511 0.096 186.391);
+    --color-primary-800: oklch(0.437 0.078 188.216);
+    --color-primary-900: oklch(0.386 0.063 188.416);
+    --color-primary-950: oklch(0.277 0.046 192.524);
+
+}
+
+
+@layer utilities {
+    .no-scrollbar-track::-webkit-scrollbar-track {
+        @apply bg-white/5;
+    }
+
+    .no-scrollbar-track::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .no-scrollbar-track::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 6px;
+    }
+
+    .no-scrollbar-track {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* thumb color, track color */
+    }
+}
+
+
+@utility wrapper {
+    @apply w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8;
 }

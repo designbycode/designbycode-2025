@@ -1,0 +1,9 @@
+<x-app-layout>
+    <div class="wrapper my-6">
+        <div class="prose prose-invert min-w-full space-y-6 ">
+            <h1>{{ $post->title }}</h1>
+            <p>Estimate time to read is {{ $post->estimatedReadTime }} {{ Str::plural('minute', $post->estimatedReadTime) }}</p>
+            <x-block :content="$post->content"/>
+        </div>
+    </div>
+</x-app-layout>
