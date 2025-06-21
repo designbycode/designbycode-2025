@@ -23,6 +23,8 @@
         @endif
     </div>
     {{-- @formatter:off --}}
-<pre class="border border-gray-700/50 rounded-lg p-2 flex-1 overflow-x-auto no-scrollbar-track"><code :class="`language-{{ $language }}`" x-text="{{ json_encode($code ?? trim($slot)) }}"></code></pre>
+<pre class="border border-gray-700/50 text-xs md:text-md rounded-lg p-2 flex-1 overflow-x-auto no-scrollbar-track"><code :class="`language-{{ $language }}`"
+                                                                                                                   x-text="{{
+json_encode($code ?? trim($slot)) }}"></code></pre>
     {{-- @formatter:on --}}
 </div>
