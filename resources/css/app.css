@@ -39,17 +39,17 @@
     'Segoe UI Symbol', 'Noto Color Emoji';
 
 
-    --color-primary-50: oklch(0.984 0.014 180.72);
-    --color-primary-100: oklch(0.953 0.051 180.801);
-    --color-primary-200: oklch(0.91 0.096 180.426);
-    --color-primary-300: oklch(0.855 0.138 181.071);
-    --color-primary-400: oklch(0.777 0.152 181.912);
-    --color-primary-500: oklch(0.704 0.14 182.503);
-    --color-primary-600: oklch(0.6 0.118 184.704);
-    --color-primary-700: oklch(0.511 0.096 186.391);
-    --color-primary-800: oklch(0.437 0.078 188.216);
-    --color-primary-900: oklch(0.386 0.063 188.416);
-    --color-primary-950: oklch(0.277 0.046 192.524);
+    --color-primary-50: oklch(0.984 0.019 200.873);
+    --color-primary-100: oklch(0.956 0.045 203.388);
+    --color-primary-200: oklch(0.917 0.08 205.041);
+    --color-primary-300: oklch(0.865 0.127 207.078);
+    --color-primary-400: oklch(0.789 0.154 211.53);
+    --color-primary-500: oklch(0.715 0.143 215.221);
+    --color-primary-600: oklch(0.609 0.126 221.723);
+    --color-primary-700: oklch(0.52 0.105 223.128);
+    --color-primary-800: oklch(0.45 0.085 224.283);
+    --color-primary-900: oklch(0.398 0.07 227.392);
+    --color-primary-950: oklch(0.302 0.056 229.695);
 
 }
 
@@ -74,7 +74,10 @@
     }
 }
 
+@utility strips {
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, var(--color-gray-800) 10px, var(--color-gray-800) 12px);
+}
 
 @utility wrapper {
-    @apply w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply w-full max-w-2xl mx-auto px-4 sm:px-6 lg:px-8;
 }
