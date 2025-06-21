@@ -1,7 +1,8 @@
 import './bootstrap';
 import {Alpine, Livewire} from '../../vendor/livewire/livewire/dist/livewire.esm';
-import clipboard from '@ryangjchandler/alpine-clipboard'
 import Prism from 'prismjs';
+
+import Clipboard from "@ryangjchandler/alpine-clipboard"
 
 
 import '../css/prism-okaidia.css';
@@ -14,7 +15,9 @@ import 'prismjs/components/prism-markup';
 
 window.Prism = Prism;
 
+Alpine.plugin(Clipboard)
 
-Alpine.plugin(clipboard)
+window.Alpine = Alpine
+
 
 Livewire.start()
