@@ -1,23 +1,24 @@
 import './bootstrap';
 import {Alpine, Livewire} from '../../vendor/livewire/livewire/dist/livewire.esm';
 import Prism from 'prismjs';
-
-import Clipboard from "@ryangjchandler/alpine-clipboard"
-
-
-import '../css/prism-okaidia.css';
-
-// Optional: Load additional languages if needed
 import "prismjs/components/prism-markup-templating.js"
 import 'prismjs/components/prism-php';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
+import '../css/prism-okaidia.css';
 
-window.Prism = Prism;
+
+import Clipboard from "@ryangjchandler/alpine-clipboard"
+
+document.addEventListener('livewire:navigated', () => {
+    if (window.Prism) {
+        Prism.highlightAll();
+    }
+});
+
+// Optional: Load additional languages if needed
+
 
 Alpine.plugin(Clipboard)
-
 window.Alpine = Alpine
-
-
 Livewire.start()

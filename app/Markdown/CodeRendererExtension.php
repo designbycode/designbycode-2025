@@ -2,7 +2,9 @@
 
 namespace App\Markdown;
 
+use Illuminate\Support\Facades\Blade;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
+use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
@@ -13,11 +15,17 @@ class CodeRendererExtension implements ExtensionInterface, NodeRendererInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
-        // TODO: Implement register() method.
+        $environment->addRenderer(FencedCode::class, $this, 100);
     }
 
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        dd($node);
+        /** @var $node FencedCode */
+        $info = $node->getInfoWords();
+
+        if (in_array('+blade', $info)) {
+            return Blade::render($node->getLiteral());
+        }
+
     }
 }

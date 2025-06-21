@@ -17,14 +17,14 @@
     @livewireStyles
     @filamentStyles
 </head>
-<body class="antialiased bg-neutral-900 d text-neutral-200 min-h-screen overflow-x-clip selection:bg-primary-500 selection:text-primary-50">
+<body class="antialiased bg-neutral-800 flex flex-col pt-12 text-neutral-200 min-h-screen overflow-x-clip selection:bg-primary-500 selection:text-primary-50">
 <x-navigation/>
-<div aria-hidden="true" class="fixed strips -z-10 left-0 w-2.5 md:w-10 opacity-50 inset-y-0 border-r border-gray-800"></div>
-<div aria-hidden="true" class="fixed strips -z-10 right-0 w-2.5 md:w-10 opacity-50 inset-y-0 border-l border-gray-800"></div>
-<main id="main">
+<div aria-hidden="true" class="fixed strips -z-10 left-0 w-2.5 md:w-10 opacity-50 inset-y-0 border-r border-gray-700"></div>
+<div aria-hidden="true" class="fixed strips -z-10 right-0 w-2.5 md:w-10 opacity-50 inset-y-0 border-l border-gray-700"></div>
+<main id="main" class="flex-1">
     {{ $slot }}
 </main>
-
+<x-footer/>
 
 @livewireScriptConfig
 @filamentScripts

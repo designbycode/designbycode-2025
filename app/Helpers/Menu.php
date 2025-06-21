@@ -9,7 +9,7 @@ class Menu
     /**
      * Create a new class instance.
      */
-    public static function main( ): Collection
+    public static function main(): Collection
     {
         $items = [
             [
@@ -18,15 +18,10 @@ class Menu
                 'active' => 'home',
             ],
             [
-                'name' => 'Articles',
+                'name' => 'Tutorials',
                 'route' => 'posts.index',
                 'active' => 'posts.*',
-            ],
-            [
-                'name' => 'About Us',
-                'route' => 'about-us',
-                'active' => 'home',
-            ],
+            ]
         ];
         return static::colletor($items);
     }

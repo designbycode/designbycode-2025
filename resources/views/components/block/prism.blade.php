@@ -7,8 +7,8 @@
         }, 2000);
     }
 }"
-     class="w-full rounded-lg my-4 bg-gray-950/50 backdrop-blur-sm flex flex-col p-2 border border-gray-800/25 shadow-md shadow-black/25">
-    <div class="flex justify-between text-xs p-2">
+     class="w-full rounded-lg my-4 bg-gray-900/50 backdrop-blur-sm flex flex-col p-2 border border-gray-700/25 shadow-md shadow-black/25">
+    <div class="flex justify-between items-center text-xs p-2">
         <span class="tracking-wide">{{ strtoupper($language) }}</span>
         @if($showCopy ?? true)
             <button
@@ -23,8 +23,6 @@
         @endif
     </div>
     {{-- @formatter:off --}}
-<pre class="border border-gray-800/50 rounded-lg p-2 min-h-full flex-1 overflow-x-auto no-scrollbar-track">
-<code :class="`language-{{ $language }}`" x-text="{{ json_encode($code ?? trim($slot)) }}"></code>
-</pre>
+<pre class="border border-gray-700/50 rounded-lg p-2 flex-1 overflow-x-auto no-scrollbar-track"><code :class="`language-{{ $language }}`" x-text="{{ json_encode($code ?? trim($slot)) }}"></code></pre>
     {{-- @formatter:on --}}
 </div>
