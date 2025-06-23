@@ -14,18 +14,23 @@ class TailwindTableRenderer implements NodeRendererInterface
 {
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof Table)) {
+        if (!($node instanceof \League\CommonMark\Extension\Table\Table)) {
             throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
         }
 
-        $attrs = $node->data->get('attributes', []);
-        $attrs['class'] = 'w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400';
+        // Attributes for the main <table> element
+        $tableAttributes = $node->data->get('attributes', []);
+        $tableAttributes['class'] = trim(($tableAttributes['class'] ?? '') . ' w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400');
 
-        $tableElement = new HtmlElement('table', $attrs, $childRenderer->renderNodes($node->children()));
+        // Render inner content of the table (thead, tbody)
+        $innerTableContent = $childRenderer->renderNodes($node->children());
+        $tableElement = new HtmlElement('table', $tableAttributes, $innerTableContent);
 
-        $wrapperDivAttrs = [
+        // Attributes for the wrapping <div>
+        $wrapperDivAttributes = [
             'class' => 'relative overflow-x-auto shadow-md sm:rounded-lg',
         ];
-        return new HtmlElement('div', $wrapperDivAttrs, (string) $tableElement);
+
+        return new HtmlElement('div', $wrapperDivAttributes, (string) $tableElement);
     }
 }
