@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace App\Markdown;
 
+use InvalidArgumentException;
 use League\CommonMark\Extension\Table\TableCell;
+use League\CommonMark\Extension\Table\TableRow;
+use League\CommonMark\Extension\Table\TableSection;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use RuntimeException;
+use function get_class;
 
 class TailwindTableCellRenderer implements NodeRendererInterface
 {
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        if (!($node instanceof \League\CommonMark\Extension\Table\TableCell)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
+        if (!($node instanceof TableCell)) {
+            throw new InvalidArgumentException('Incompatible node type: ' . get_class($node));
         }
 
         $attrs = $node->data->get('attributes', []);
@@ -27,25 +32,25 @@ class TailwindTableCellRenderer implements NodeRendererInterface
         if ($cellTypeString === 'th' || $cellTypeString === 'header') {
             $htmlTagName = 'th';
             $attrs['scope'] = 'col';
-            $attrs['class'] = 'px-6 py-3';
+            $attrs['class'] = 'px-6 py-3 first:rounded-tl-lg last:rounded-tr-lg';
         } elseif ($cellTypeString === 'td' || $cellTypeString === 'cell' || $cellTypeString === 'data') {
             $htmlTagName = 'td';
-            $attrs['class'] = 'px-6 py-4';
+            $attrs['class'] = 'px-6 py-4 ';
         } else {
-            throw new \RuntimeException("Unknown TableCell type string: {$cellTypeString}");
+            throw new RuntimeException("Unknown TableCell type string: {$cellTypeString}");
         }
 
         // Specific styling adjustments based on context (e.g., first cell in tbody row)
         $parentRow = $node->parent();
-        if ($parentRow instanceof \League\CommonMark\Extension\Table\TableRow &&
-            $parentRow->parent() instanceof \League\CommonMark\Extension\Table\TableSection &&
-            $parentRow->parent()->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_BODY &&
+        if ($parentRow instanceof TableRow &&
+            $parentRow->parent() instanceof TableSection &&
+            $parentRow->parent()->getType() === TableSection::TYPE_BODY &&
             $parentRow->firstChild() === $node) {
 
             // This is the first cell in a body row. Style it as a row header.
             $htmlTagName = 'th'; // Ensure it's a <th>
             $attrs['scope'] = 'row';
-            $attrs['class'] = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
+            $attrs['class'] = 'px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white';
         } elseif ($htmlTagName === 'th') {
             // This is a header cell, likely in thead, or not the first cell in a tbody row.
             // Ensure standard header cell styling if not overridden by the above 'first cell in body' logic.

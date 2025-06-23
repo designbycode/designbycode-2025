@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace App\Markdown;
 
+use InvalidArgumentException;
 use League\CommonMark\Extension\Table\Table;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use function get_class;
 
 class TailwindTableRenderer implements NodeRendererInterface
 {
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
-        if (!($node instanceof \League\CommonMark\Extension\Table\Table)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
+        if (!($node instanceof Table)) {
+            throw new InvalidArgumentException('Incompatible node type: ' . get_class($node));
         }
 
         // Attributes for the main <table> element
@@ -28,9 +30,9 @@ class TailwindTableRenderer implements NodeRendererInterface
 
         // Attributes for the wrapping <div>
         $wrapperDivAttributes = [
-            'class' => 'relative overflow-x-auto shadow-md sm:rounded-lg',
+            'class' => 'relative border dark:border-white/5 border-black/5 overflow-x-auto shadow-md sm:rounded-lg prose-table:my-0',
         ];
 
-        return new HtmlElement('div', $wrapperDivAttributes, (string) $tableElement);
+        return new HtmlElement('div', $wrapperDivAttributes, (string)$tableElement);
     }
 }
