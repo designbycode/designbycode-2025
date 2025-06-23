@@ -19,47 +19,42 @@ class TailwindTableCellRenderer implements NodeRendererInterface
         }
 
         $attrs = $node->data->get('attributes', []);
-        // getType() directly returns 'th' or 'td'
-        $cellTypeString = $node->getType();
+        $cellTypeString = strtolower($node->getType()); // Normalize to lowercase, e.g., "header" or "th"
 
-        $htmlTagName = $cellTypeString; // Use 'th' or 'td' directly as the tag name initially
+        $htmlTagName = '';
 
-        if ($htmlTagName === 'th') {
-            $attrs['scope'] = 'col'; // Default scope for header cells
-            $attrs['class'] = 'px-6 py-3'; // Default classes for <thead> <th>
-
-            // If a 'th' is found in the body (less common for GFM, but possible if AST is built that way)
-            // and it's the first cell, it might need the special row header styling.
-            // However, the primary logic for styling the first body cell as a 'th' is below for 'td' types.
-            // This block primarily styles 'th' elements typically found in 'thead'.
-            $parentRow = $node->parent();
-            if ($parentRow instanceof \League\CommonMark\Extension\Table\TableRow &&
-                $parentRow->parent() instanceof \League\CommonMark\Extension\Table\TableSection &&
-                $parentRow->parent()->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_BODY &&
-                $parentRow->firstChild() === $node) {
-                  // This is a 'th' that is also the first cell in a body row. Apply special styling.
-                  $attrs['scope'] = 'row';
-                  $attrs['class'] = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
-            }
-
-        } elseif ($htmlTagName === 'td') {
-            $attrs['class'] = 'px-6 py-4'; // Default classes for <td>
-
-            // Check if this <td> is the first cell in a <tbody> row
-            $parentRow = $node->parent();
-            if ($parentRow instanceof \League\CommonMark\Extension\Table\TableRow &&
-                $parentRow->parent() instanceof \League\CommonMark\Extension\Table\TableSection &&
-                $parentRow->parent()->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_BODY &&
-                $parentRow->firstChild() === $node) {
-
-                // If it's the first <td> in a body row, change tag to <th> and apply special styling
-                $htmlTagName = 'th'; // Override tag to 'th'
-                $attrs['scope'] = 'row';
-                $attrs['class'] = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
-            }
+        // Determine the intended HTML tag ('th' or 'td') and apply base styling
+        if ($cellTypeString === 'th' || $cellTypeString === 'header') {
+            $htmlTagName = 'th';
+            $attrs['scope'] = 'col';
+            $attrs['class'] = 'px-6 py-3';
+        } elseif ($cellTypeString === 'td' || $cellTypeString === 'cell' || $cellTypeString === 'data') {
+            $htmlTagName = 'td';
+            $attrs['class'] = 'px-6 py-4';
         } else {
-            // Should not happen with valid TableCell nodes from GFM TableExtension
-            throw new \RuntimeException("Invalid TableCell type string: {$cellTypeString}");
+            throw new \RuntimeException("Unknown TableCell type string: {$cellTypeString}");
+        }
+
+        // Specific styling adjustments based on context (e.g., first cell in tbody row)
+        $parentRow = $node->parent();
+        if ($parentRow instanceof \League\CommonMark\Extension\Table\TableRow &&
+            $parentRow->parent() instanceof \League\CommonMark\Extension\Table\TableSection &&
+            $parentRow->parent()->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_BODY &&
+            $parentRow->firstChild() === $node) {
+
+            // This is the first cell in a body row. Style it as a row header.
+            $htmlTagName = 'th'; // Ensure it's a <th>
+            $attrs['scope'] = 'row';
+            $attrs['class'] = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
+        } elseif ($htmlTagName === 'th') {
+            // This is a header cell, likely in thead, or not the first cell in a tbody row.
+            // Ensure standard header cell styling if not overridden by the above 'first cell in body' logic.
+            // The base styling for 'th'/'header' types already set 'scope' and 'class' appropriately for thead cells.
+            // If it was a 'th' in tbody but NOT the first cell, it would retain its 'th' tag
+            // and the default 'px-6 py-3' and 'scope=col' if not further specified.
+            // This part might need refinement if there are 'th' cells in tbody that are not the first cell
+            // and require different styling than thead 'th' cells.
+            // For now, the logic prioritizes the "first cell in body" styling.
         }
 
         return new HtmlElement($htmlTagName, $attrs, $childRenderer->renderNodes($node->children()));
