@@ -19,20 +19,30 @@ class TailwindTableCellRenderer implements NodeRendererInterface
         }
 
         $attrs = $node->data->get('attributes', []);
-        $nodeType = $node->getType(); // This is from League\CommonMark\Extension\Table\TableCell constants ('th' or 'td')
+        // getType() directly returns 'th' or 'td'
+        $cellTypeString = $node->getType();
 
-        $htmlTagName = '';
+        $htmlTagName = $cellTypeString; // Use 'th' or 'td' directly as the tag name initially
 
-        if ($nodeType === \League\CommonMark\Extension\Table\TableCell::TYPE_HEADER) {
-            $htmlTagName = 'th';
+        if ($htmlTagName === 'th') {
             $attrs['scope'] = 'col'; // Default scope for header cells
             $attrs['class'] = 'px-6 py-3'; // Default classes for <thead> <th>
 
-            // It's unusual for a TableCell::TYPE_HEADER to be in a tbody in GFM,
-            // but if it were, this renderer would style it like a thead th.
-            // The logic to make a <td> into a <th> for row headers is in the TYPE_CELL block.
-        } elseif ($nodeType === \League\CommonMark\Extension\Table\TableCell::TYPE_CELL) {
-            $htmlTagName = 'td'; // Default tag for data cells
+            // If a 'th' is found in the body (less common for GFM, but possible if AST is built that way)
+            // and it's the first cell, it might need the special row header styling.
+            // However, the primary logic for styling the first body cell as a 'th' is below for 'td' types.
+            // This block primarily styles 'th' elements typically found in 'thead'.
+            $parentRow = $node->parent();
+            if ($parentRow instanceof \League\CommonMark\Extension\Table\TableRow &&
+                $parentRow->parent() instanceof \League\CommonMark\Extension\Table\TableSection &&
+                $parentRow->parent()->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_BODY &&
+                $parentRow->firstChild() === $node) {
+                  // This is a 'th' that is also the first cell in a body row. Apply special styling.
+                  $attrs['scope'] = 'row';
+                  $attrs['class'] = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
+            }
+
+        } elseif ($htmlTagName === 'td') {
             $attrs['class'] = 'px-6 py-4'; // Default classes for <td>
 
             // Check if this <td> is the first cell in a <tbody> row
@@ -42,14 +52,14 @@ class TailwindTableCellRenderer implements NodeRendererInterface
                 $parentRow->parent()->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_BODY &&
                 $parentRow->firstChild() === $node) {
 
-                // If it's the first cell in a body row, change tag to <th> and apply special styling
-                $htmlTagName = 'th';
+                // If it's the first <td> in a body row, change tag to <th> and apply special styling
+                $htmlTagName = 'th'; // Override tag to 'th'
                 $attrs['scope'] = 'row';
                 $attrs['class'] = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
             }
         } else {
-            // Should not happen with valid TableCell nodes
-            throw new \RuntimeException("Invalid TableCell type: {$nodeType}");
+            // Should not happen with valid TableCell nodes from GFM TableExtension
+            throw new \RuntimeException("Invalid TableCell type string: {$cellTypeString}");
         }
 
         return new HtmlElement($htmlTagName, $attrs, $childRenderer->renderNodes($node->children()));
