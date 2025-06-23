@@ -47,7 +47,8 @@ return [
     'extensions' => [
         League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension::class,
         App\Markdown\CustomFencedCodeExtension::class,
-        League\CommonMark\Extension\Table\TableExtension::class,
+        // Replaced League\CommonMark\Extension\Table\TableExtension::class with our custom one
+        App\Markdown\TailwindTableExtension::class,
         App\Markdown\CodeRendererExtension::class,
 
     ],

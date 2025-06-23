@@ -2,6 +2,13 @@
 
 use App\Http\Controllers\Pages\AboutUsPageController;
 use App\Http\Controllers\Pages\HomePageController;
+
+Route::get('/test-markdown-table', function () {
+    if (app()->environment('local') || app()->environment('testing')) {
+        return view('test-markdown-table');
+    }
+    abort(404);
+})->name('test.markdown.table');
 use App\Http\Controllers\Pages\Posts\PostsIndexController;
 use App\Http\Controllers\Pages\Posts\PostsShowController;
 use Illuminate\Support\Facades\Route;
