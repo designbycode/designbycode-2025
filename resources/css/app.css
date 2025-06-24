@@ -25,6 +25,7 @@
 @import '../../vendor/filament/widgets/resources/css/index.css';
 
 @variant dark (&:where(.dark, .dark *));
+@source inline("{.dark}");
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
