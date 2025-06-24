@@ -27,10 +27,10 @@ class TailwindTableCellRenderer implements NodeRendererInterface
         if ($cellTypeString === 'th' || $cellTypeString === 'header') {
             $htmlTagName = 'th';
             $attrs['scope'] = 'col';
-            $attrs['class'] = 'px-6 py-3';
+            $attrs['class'] = config('tailwind_tables.th_head', 'px-6 py-3');
         } elseif ($cellTypeString === 'td' || $cellTypeString === 'cell' || $cellTypeString === 'data') {
             $htmlTagName = 'td';
-            $attrs['class'] = 'px-6 py-4';
+            $attrs['class'] = config('tailwind_tables.td_cell', 'px-6 py-4');
         } else {
             throw new \RuntimeException("Unknown TableCell type string: {$cellTypeString}");
         }
@@ -45,17 +45,12 @@ class TailwindTableCellRenderer implements NodeRendererInterface
             // This is the first cell in a body row. Style it as a row header.
             $htmlTagName = 'th'; // Ensure it's a <th>
             $attrs['scope'] = 'row';
-            $attrs['class'] = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
-        } elseif ($htmlTagName === 'th') {
-            // This is a header cell, likely in thead, or not the first cell in a tbody row.
-            // Ensure standard header cell styling if not overridden by the above 'first cell in body' logic.
-            // The base styling for 'th'/'header' types already set 'scope' and 'class' appropriately for thead cells.
-            // If it was a 'th' in tbody but NOT the first cell, it would retain its 'th' tag
-            // and the default 'px-6 py-3' and 'scope=col' if not further specified.
-            // This part might need refinement if there are 'th' cells in tbody that are not the first cell
-            // and require different styling than thead 'th' cells.
-            // For now, the logic prioritizes the "first cell in body" styling.
+            $attrs['class'] = config('tailwind_tables.th_body_row_header', 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white');
         }
+        // Note: The original 'elseif ($htmlTagName === 'th')' block is implicitly handled.
+        // If it's a 'th' (from cellTypeString) and NOT the first cell in a body row,
+        // it will retain the $htmlTagName = 'th' and the classes/scope set initially from 'th_head'.
+        // This seems correct as per current requirements.
 
         return new HtmlElement($htmlTagName, $attrs, $childRenderer->renderNodes($node->children()));
     }

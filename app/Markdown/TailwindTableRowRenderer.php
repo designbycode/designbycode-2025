@@ -22,20 +22,19 @@ class TailwindTableRowRenderer implements NodeRendererInterface
         $parent = $node->parent();
 
         if ($parent instanceof \League\CommonMark\Extension\Table\TableSection && $parent->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_BODY) {
-            // Apply consistent border style to all <tr> in <tbody>
-            // The user's example HTML:
-            // <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-            // Let's use: "bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
-            // The last row in their example did not have border-b: <tr class="bg-white dark:bg-gray-800">
-            // CommonMark doesn't easily distinguish the last row without more complex logic or custom AST nodes.
-            // So, a consistent style for all body rows is more straightforward here.
             $currentClasses = $attrs['class'] ?? '';
-            $newClasses = 'bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700';
-            $attrs['class'] = trim($currentClasses . ' ' . $newClasses);
-
+            $configuredClasses = config('tailwind_tables.tbody_row', 'bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700');
+            if (!empty($configuredClasses)) {
+                $attrs['class'] = trim($currentClasses . ' ' . $configuredClasses);
+            } elseif (empty($currentClasses) && !isset($attrs['class'])) {
+                // Ensure 'class' attribute is not present if no classes are defined
+                // HtmlElement handles this, so this might be overly cautious.
+            }
         } elseif ($parent instanceof \League\CommonMark\Extension\Table\TableSection && $parent->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_HEAD) {
-            // No specific classes for <tr> in <thead> from the example, so do nothing here.
-            // $attrs['class'] = ($attrs['class'] ?? '') . ' a-thead-tr-class';
+            // No specific classes for <tr> in <thead> from the example or current config structure.
+            // One could add a 'thead_row' key to config if needed.
+            // $configuredClasses = config('tailwind_tables.thead_row', '');
+            // if (!empty($configuredClasses)) { ... }
         }
 
         return new HtmlElement('tr', $attrs, $childRenderer->renderNodes($node->children()));

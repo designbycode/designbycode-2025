@@ -25,17 +25,20 @@ class TailwindTableSectionRenderer implements NodeRendererInterface
         $newClasses = '';
 
         if ($tagName === 'thead') {
-            $newClasses = 'text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400';
+            $newClasses = config('tailwind_tables.thead', 'text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400');
         } else { // tbody
-            // No specific classes for <tbody> itself from the example
-            // $newClasses = 'a-tbody-class';
+            // No specific classes for <tbody> itself from the example or config by default
+            // $newClasses = config('tailwind_tables.tbody', ''); // Example if you add a 'tbody' key to config
         }
 
         if (!empty($newClasses)) {
             $attrs['class'] = trim($currentClasses . ' ' . $newClasses);
-        } elseif (empty($currentClasses)) {
-            // Ensure 'class' attribute is not present if no classes are defined
-            unset($attrs['class']);
+        } elseif (empty($currentClasses) && !isset($attrs['class'])) { // Check if class was not set at all
+             // If $newClasses is empty AND $currentClasses was empty AND $attrs['class'] was not touched by $node->data,
+             // ensure 'class' attribute is not present if no classes are defined from config or node data.
+             // This might be redundant if $attrs['class'] is only set if there are classes.
+             // The primary goal is that if config returns empty and node had no class, no 'class=""' is output.
+             // HtmlElement usually handles empty class attributes correctly (doesn't render them).
         }
 
 
