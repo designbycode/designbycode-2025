@@ -22,7 +22,8 @@ class TailwindTableRenderer implements NodeRendererInterface
 
         // Attributes for the main <table> element
         $tableAttributes = $node->data->get('attributes', []);
-        $tableAttributes['class'] = trim(($tableAttributes['class'] ?? '') . ' w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400');
+        $tableConfiguredClass = config('tailwind_tables.table', 'w-full text-sm text-left rtl:text-right');
+        $tableAttributes['class'] = trim(($tableAttributes['class'] ?? '') . ' ' . $tableConfiguredClass);
 
         // Render inner content of the table (thead, tbody)
         $innerTableContent = $childRenderer->renderNodes($node->children());
@@ -30,7 +31,7 @@ class TailwindTableRenderer implements NodeRendererInterface
 
         // Attributes for the wrapping <div>
         $wrapperDivAttributes = [
-            'class' => 'relative border dark:border-white/5 border-black/5 overflow-x-auto shadow-md sm:rounded-lg prose-table:my-0',
+            'class' => config('tailwind_tables.wrapper', 'relative overflow-x-auto shadow-md sm:rounded-lg'),
         ];
 
         return new HtmlElement('div', $wrapperDivAttributes, (string)$tableElement);
