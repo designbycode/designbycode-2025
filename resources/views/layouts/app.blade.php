@@ -17,10 +17,10 @@
     @livewireStyles
     @filamentStyles
 </head>
-<body class="antialiased bg-background text-foreground  flex flex-col pt-18  min-h-screen overflow-x-clip selection:bg-primary-500 selection:text-primary-50">
+<body class="antialiased bg-background text-foreground flex flex-col pt-18 min-h-screen overflow-x-clip selection:bg-primary selection:text-white">
 <x-navigation/>
-<div aria-hidden="true" class="fixed strips -z-10 left-0 opacity-25 w-1 md:w-10 inset-y-0 border-r border-background-lighter"></div>
-<div aria-hidden="true" class="fixed strips -z-10 right-0 opacity-25 w-1 md:w-10 inset-y-0 border-l border-background-lighter"></div>
+<div aria-hidden="true" class="fixed strips -z-10 left-0 opacity-5 w-1 md:w-10 inset-y-0 border-r border-foreground"></div>
+<div aria-hidden="true" class="fixed strips -z-10 right-0 opacity-5 w-1 md:w-10 inset-y-0 border-l border-foreground"></div>
 <main id="main" class="flex-1">
     {{ $slot }}
 </main>

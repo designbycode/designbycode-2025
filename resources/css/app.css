@@ -25,7 +25,7 @@
 @import '../../vendor/filament/widgets/resources/css/index.css';
 
 @variant dark (&:where(.dark, .dark *));
-@source inline("{.dark}");
+@source inline("{.dark,hr}");
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -97,14 +97,12 @@
     }
 
     hr {
-        @apply w-full h-2 opacity-50 border border-background-lighter rounded-lg strips;
+        @apply w-full h-2 opacity-10 outline-1 border border-foreground rounded-lg strips
     }
 }
 
 @utility strips {
-    background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, var(--color-background-lighter) 10px, var(--color-background-lighter) 12px);
-    /*background-image: repeating-linear-gradient(-45deg, var(--color-background-lighter), var(--color-background-lighter) 1px, transparent 1px, transparent 7px);*/
-    /*background-size: 10px 10px;*/
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, var(--color-foreground) 10px, var(--color-foreground) 12px);
 }
 
 

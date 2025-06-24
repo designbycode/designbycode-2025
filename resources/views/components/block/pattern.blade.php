@@ -1,1 +1,1 @@
-<hr class=" strips w-full h-2 opacity-50 border border-b-background-lighter rounded-lg"/>
+<hr class="strips w-full h-2 border border-foreground rounded-lg"/>
