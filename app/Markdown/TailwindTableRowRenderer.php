@@ -33,7 +33,9 @@ class TailwindTableRowRenderer implements NodeRendererInterface
                 // Ensure 'class' attribute is not present if no classes are defined
                 // HtmlElement handles this, so this might be overly cautious.
             }
+
         } elseif ($parent instanceof TableSection && $parent->getType() === TableSection::TYPE_HEAD) {
+
             // No specific classes for <tr> in <thead> from the example or current config structure.
             // One could add a 'thead_row' key to config if needed.
             // $configuredClasses = config('tailwind_tables.thead_row', '');

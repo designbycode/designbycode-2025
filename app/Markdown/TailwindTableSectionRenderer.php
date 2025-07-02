@@ -27,7 +27,9 @@ class TailwindTableSectionRenderer implements NodeRendererInterface
         $newClasses = '';
 
         if ($tagName === 'thead') {
+
             $newClasses = config('tailwind_tables.thead', 'text-xs uppercase ');
+
         } else { // tbody
             // No specific classes for <tbody> itself from the example or config by default
             // $newClasses = config('tailwind_tables.tbody', ''); // Example if you add a 'tbody' key to config
@@ -36,6 +38,7 @@ class TailwindTableSectionRenderer implements NodeRendererInterface
         if (!empty($newClasses)) {
             $attrs['class'] = trim($currentClasses . ' ' . $newClasses);
         } elseif (empty($currentClasses) && !isset($attrs['class'])) { // Check if class was not set at all
+
             // If $newClasses is empty AND $currentClasses was empty AND $attrs['class'] was not touched by $node->data,
             // ensure 'class' attribute is not present if no classes are defined from config or node data.
             // This might be redundant if $attrs['class'] is only set if there are classes.

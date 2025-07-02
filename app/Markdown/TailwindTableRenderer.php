@@ -22,7 +22,9 @@ class TailwindTableRenderer implements NodeRendererInterface
 
         // Attributes for the main <table> element
         $tableAttributes = $node->data->get('attributes', []);
-        $tableConfiguredClass = config('tailwind_tables.table', 'w-full text-sm text-left rtl:text-right');
+
+        $tableConfiguredClass = config('tailwind_tables.table', 'w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400');
+
         $tableAttributes['class'] = trim(($tableAttributes['class'] ?? '') . ' ' . $tableConfiguredClass);
 
         // Render inner content of the table (thead, tbody)

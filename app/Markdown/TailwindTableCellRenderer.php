@@ -55,7 +55,9 @@ class TailwindTableCellRenderer implements NodeRendererInterface
             // This is the first cell in a body row. Style it as a row header.
             $htmlTagName = 'th'; // Ensure it's a <th>
             $attrs['scope'] = 'row';
-            $attrs['class'] = config('tailwind_tables.th_body_row_header', 'px-6 py-4  whitespace-nowrap ');
+
+            $attrs['class'] = config('tailwind_tables.th_body_row_header', 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white');
+
         }
         // Note: The original 'elseif ($htmlTagName === 'th')' block is implicitly handled.
         // If it's a 'th' (from cellTypeString) and NOT the first cell in a body row,
