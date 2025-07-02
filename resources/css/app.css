@@ -25,6 +25,7 @@
 @import '../../vendor/filament/widgets/resources/css/index.css';
 
 @variant dark (&:where(.dark, .dark *));
+@source inline("{.dark,hr}");
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -34,34 +35,44 @@
 
 @plugin '@tailwindcss/typography';
 
+:root {
+    --primary-color: var(--color-cyan-500);
+
+    --background-color: var(--color-neutral-100);
+    --background-color-lighter: var(--color-white);
+    --background-color-darker: var(--color-neutral-300);
+
+    --foreground-color: var(--color-neutral-900);
+    --foreground-color-lighter: var(--color-neutral-700);
+    --foreground-color-darker: var(--color-neutral-950);
+}
+
+.dark {
+    --foreground-color: var(--color-neutral-100);
+    --foreground-color-lighter: var(--color-white);
+    --foreground-color-darker: var(--color-neutral-300);
+
+    --background-color: var(--color-neutral-900);
+    --background-color-lighter: var(--color-neutral-700);
+    --background-color-darker: var(--color-neutral-950);
+
+}
+
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
 
+    --color-primary: var(--primary-color);
 
-    --color-primary-50: oklch(0.984 0.019 200.873);
-    --color-primary-100: oklch(0.956 0.045 203.388);
-    --color-primary-200: oklch(0.917 0.08 205.041);
-    --color-primary-300: oklch(0.865 0.127 207.078);
-    --color-primary-400: oklch(0.789 0.154 211.53);
-    --color-primary-500: oklch(0.715 0.143 215.221);
-    --color-primary-600: oklch(0.609 0.126 221.723);
-    --color-primary-700: oklch(0.52 0.105 223.128);
-    --color-primary-800: oklch(0.45 0.085 224.283);
-    --color-primary-900: oklch(0.398 0.07 227.392);
-    --color-primary-950: oklch(0.302 0.056 229.695);
+    --color-foreground: var(--foreground-color);
+    --color-foreground-lighter: var(--foreground-color-lighter);
+    --color-foreground-darker: var(--foreground-color-darker);
 
-    --color-gray-50: oklch(0.985 0 0);
-    --color-gray-100: oklch(0.97 0 0);
-    --color-gray-200: oklch(0.922 0 0);
-    --color-gray-300: oklch(0.87 0 0);
-    --color-gray-400: oklch(0.708 0 0);
-    --color-gray-500: oklch(0.556 0 0);
-    --color-gray-600: oklch(0.439 0 0);
-    --color-gray-700: oklch(0.371 0 0);
-    --color-gray-800: oklch(0.269 0 0);
-    --color-gray-900: oklch(0.205 0 0);
-    --color-gray-950: oklch(0.145 0 0);
+    --color-background: var(--background-color);
+    --color-background-lighter: var(--background-color-lighter);
+    --color-background-darker: var(--background-color-darker);
+
 
 }
 
@@ -86,14 +97,12 @@
     }
 
     hr {
-        @apply w-full h-2 opacity-50 border border-gray-700 rounded-lg strips;
+        @apply w-full h-2 opacity-10 outline-1 border border-foreground rounded-lg strips
     }
 }
 
 @utility strips {
-    background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, var(--color-gray-700) 10px, var(--color-gray-700) 12px);
-    /*background-image: repeating-linear-gradient(-45deg, var(--color-gray-700), var(--color-gray-700) 1px, transparent 1px, transparent 7px);*/
-    /*background-size: 10px 10px;*/
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, var(--color-foreground) 10px, var(--color-foreground) 12px);
 }
 
 

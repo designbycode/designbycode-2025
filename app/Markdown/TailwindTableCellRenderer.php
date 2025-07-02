@@ -4,18 +4,28 @@ declare(strict_types=1);
 
 namespace App\Markdown;
 
+use InvalidArgumentException;
 use League\CommonMark\Extension\Table\TableCell;
+use League\CommonMark\Extension\Table\TableRow;
+use League\CommonMark\Extension\Table\TableSection;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+use RuntimeException;
+use function get_class;
 
 class TailwindTableCellRenderer implements NodeRendererInterface
 {
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    /**
+     * @param Node $node
+     * @param ChildNodeRendererInterface $childRenderer
+     * @return HtmlElement
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
-        if (!($node instanceof \League\CommonMark\Extension\Table\TableCell)) {
-            throw new \InvalidArgumentException('Incompatible node type: ' . \get_class($node));
+        if (!($node instanceof TableCell)) {
+            throw new InvalidArgumentException('Incompatible node type: ' . get_class($node));
         }
 
         $attrs = $node->data->get('attributes', []);
@@ -32,20 +42,22 @@ class TailwindTableCellRenderer implements NodeRendererInterface
             $htmlTagName = 'td';
             $attrs['class'] = config('tailwind_tables.td_cell', 'px-6 py-4');
         } else {
-            throw new \RuntimeException("Unknown TableCell type string: {$cellTypeString}");
+            throw new RuntimeException("Unknown TableCell type string: {$cellTypeString}");
         }
 
         // Specific styling adjustments based on context (e.g., first cell in tbody row)
         $parentRow = $node->parent();
-        if ($parentRow instanceof \League\CommonMark\Extension\Table\TableRow &&
-            $parentRow->parent() instanceof \League\CommonMark\Extension\Table\TableSection &&
-            $parentRow->parent()->getType() === \League\CommonMark\Extension\Table\TableSection::TYPE_BODY &&
+        if ($parentRow instanceof TableRow &&
+            $parentRow->parent() instanceof TableSection &&
+            $parentRow->parent()->getType() === TableSection::TYPE_BODY &&
             $parentRow->firstChild() === $node) {
 
             // This is the first cell in a body row. Style it as a row header.
             $htmlTagName = 'th'; // Ensure it's a <th>
             $attrs['scope'] = 'row';
+
             $attrs['class'] = config('tailwind_tables.th_body_row_header', 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white');
+
         }
         // Note: The original 'elseif ($htmlTagName === 'th')' block is implicitly handled.
         // If it's a 'th' (from cellTypeString) and NOT the first cell in a body row,

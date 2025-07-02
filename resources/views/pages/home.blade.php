@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-hero/>
-    <div class="wrapper">
-        
+    <div class="wrapper ">
+
 
     </div>
 

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Redis;
 
 class Post extends Model
 {
@@ -86,5 +87,16 @@ class Post extends Model
             return ceil($wordCount / $wpm);
         });
     }
+
+    public function logView(): void
+    {
+        Redis::pfadd(sprintf('posts.%s.views', $this->id), [request()->ip()]);
+    }
+
+    public function getViewCount()
+    {
+        return Redis::pfcount(sprintf('posts.%s.views', $this->id));
+    }
+    
 
 }
