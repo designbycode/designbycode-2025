@@ -3,7 +3,7 @@
         <a class="text-2xl font-semibold hover:text-primary  duration-150" wire:navigate href="{{ route('home') }}">{{ config('app.name') }}</a>
         <div class="flex space-x-4 items-center text-sm group  duration-150">
             @foreach($menu as $key => $item)
-                <a wire:navigate
+                <a wire:navigate.hover
                    @class([
                     'whitespace-nowrap font-semibold duration-150
                      hover:text-primary',
@@ -48,33 +48,33 @@
                      x-transition:leave-end="opacity-0 scale-95"
                      class="absolute right-0 mt-2 w-40 bg-background border border-background-lighter/10 rounded-md shadow-lg py-1 z-50"
                      x-cloak>
-                    <a @click.prevent="setTheme('light')" href="#"
-                       :class="{'bg-background-lighter/10 text-primary': theme === 'light'}"
-                       class="flex items-center px-4 py-2 text-sm hover:bg-background-lighter/10 hover:text-primary">
+                    <button @click.prevent="setTheme('light')"
+                            :class="{'bg-background-lighter/10 text-primary': theme === 'light'}"
+                            class="flex items-center w-full px-4 py-2 text-sm hover:bg-background-lighter/10 hover:text-primary">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
                         Light
-                    </a>
-                    <a @click.prevent="setTheme('dark')" href="#"
-                       :class="{'bg-background-lighter/10 text-primary': theme === 'dark'}"
-                       class="flex items-center px-4 py-2 text-sm hover:bg-background-lighter/10 hover:text-primary">
+                    </button>
+                    <button @click.prevent="setTheme('dark')"
+                            :class="{'bg-background-lighter/10 text-primary': theme === 'dark'}"
+                            class="flex items-center w-full px-4 py-2 text-sm hover:bg-background-lighter/10 hover:text-primary">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                         </svg>
                         Dark
-                    </a>
-                    <a @click.prevent="setTheme('system')" href="#"
-                       :class="{'bg-background-lighter/10 text-primary': theme === 'system'}"
-                       class="flex items-center px-4 py-2 text-sm hover:bg-background-lighter/10 hover:text-primary">
+                    </button>
+                    <button @click.prevent="setTheme('system')"
+                            :class="{'bg-background-lighter/10 text-primary': theme === 'system'}"
+                            class="flex items-center w-full px-4 py-2 text-sm hover:bg-background-lighter/10 hover:text-primary">
                         <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
                         System
-                    </a>
+                    </button>
                 </div>
             </div>
             <!-- End Theme Selector Dropdown -->

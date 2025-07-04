@@ -13,19 +13,15 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use RuntimeException;
+
 use function get_class;
 
 class TailwindTableCellRenderer implements NodeRendererInterface
 {
-    /**
-     * @param Node $node
-     * @param ChildNodeRendererInterface $childRenderer
-     * @return HtmlElement
-     */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
-        if (!($node instanceof TableCell)) {
-            throw new InvalidArgumentException('Incompatible node type: ' . get_class($node));
+        if (! ($node instanceof TableCell)) {
+            throw new InvalidArgumentException('Incompatible node type: '.get_class($node));
         }
 
         $attrs = $node->data->get('attributes', []);

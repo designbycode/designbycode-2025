@@ -36,11 +36,11 @@ class PostForm
                         ->blocks([
                             Builder\Block::make('rich-editor')
                                 ->schema([
-                                    RichEditor::make('content')
+                                    RichEditor::make('content'),
                                 ]),
                             Builder\Block::make('markdown')
                                 ->schema([
-                                    MarkdownEditor::make('content')
+                                    MarkdownEditor::make('content'),
                                 ]),
                             Builder\Block::make('prism')
                                 ->schema([
@@ -80,7 +80,7 @@ class PostForm
                         ->required(),
                     DateTimePicker::make('published_at'),
 
-                ])->columnSpanFull()
+                ])->columnSpanFull(),
             ]);
     }
 }

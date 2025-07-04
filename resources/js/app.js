@@ -9,6 +9,7 @@ import '../css/prism-okaidia.css';
 
 
 import Clipboard from "@ryangjchandler/alpine-clipboard"
+import Intersect from '@alpinejs/intersect'
 
 document.addEventListener('livewire:navigated', () => {
     if (window.Prism) {
@@ -20,5 +21,7 @@ document.addEventListener('livewire:navigated', () => {
 
 
 Alpine.plugin(Clipboard)
+Alpine.plugin(Intersect)
+
 window.Alpine = Alpine
 Livewire.start()

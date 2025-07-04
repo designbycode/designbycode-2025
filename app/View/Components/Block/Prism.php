@@ -9,12 +9,10 @@ use Illuminate\View\Component;
 class Prism extends Component
 {
     public function __construct(
-        public string  $language = 'php',
+        public string $language = 'php',
         public ?string $code = null,
-        public bool    $showCopy = true,
-    )
-    {
-    }
+        public bool $showCopy = true,
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

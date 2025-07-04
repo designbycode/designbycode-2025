@@ -14,7 +14,6 @@ return [
     |
     */
 
-
     'wrapper' => 'relative overflow-x-auto shadow-md sm:rounded-lg bg-white dark:bg-white/5 dark:bg-gray-800 text-gray-700 dark:text-gray-400 not-prose',
 
     'table' => 'w-full text-sm text-left rtl:text-right ',

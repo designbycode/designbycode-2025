@@ -13,9 +13,13 @@ class PostsShowController extends Controller
      */
     public function __invoke(Post $post): View
     {
-        $post->logView();
+
+        defer(function () use ($post) {
+            $post->visit();
+        });
+
         return view('pages.posts.show', [
-            'post' => $post
+            'post' => $post->load('author'),
         ]);
     }
 }

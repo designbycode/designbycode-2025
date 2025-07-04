@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\CategoryType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -16,24 +15,16 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
-        'description'
+        'description',
     ];
 
-    /**
-     * @return MorphToMany
-     */
     public function categorizables(): MorphToMany
     {
         return $this->morphedByMany(Model::class, 'categorizable');
     }
 
-
-    /**
-     * @return MorphToMany
-     */
     public function posts(): MorphToMany
     {
         return $this->morphedByMany(Post::class, 'categorizable');
     }
-
 }

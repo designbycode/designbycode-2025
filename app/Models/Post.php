@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Coderflex\Laravisit\Concerns\CanVisit;
+use Coderflex\Laravisit\Concerns\HasVisits;
 use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,10 +13,10 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Redis;
 
-class Post extends Model
+class Post extends Model implements CanVisit
 {
     /** @use HasFactory<PostFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasVisits;
 
     protected $fillable = [
         'title',
@@ -23,7 +25,7 @@ class Post extends Model
         'content',
         'live',
         'user_id',
-        'published_at'
+        'published_at',
     ];
 
     protected $casts = [
@@ -37,14 +39,10 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * @return MorphToMany
-     */
     public function categories(): MorphToMany
     {
         return $this->morphToMany(Category::class, 'categorizable');
     }
-
 
     public function getContentBlocksAttribute()
     {
@@ -84,6 +82,7 @@ class Post extends Model
 
             $wpm = 200;
             $wordCount = str_word_count($combinedText);
+
             return ceil($wordCount / $wpm);
         });
     }
@@ -97,6 +96,4 @@ class Post extends Model
     {
         return Redis::pfcount(sprintf('posts.%s.views', $this->id));
     }
-    
-
 }

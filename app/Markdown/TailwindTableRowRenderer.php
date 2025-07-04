@@ -11,14 +11,15 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
+
 use function get_class;
 
 class TailwindTableRowRenderer implements NodeRendererInterface
 {
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
-        if (!($node instanceof TableRow)) {
-            throw new InvalidArgumentException('Incompatible node type: ' . get_class($node));
+        if (! ($node instanceof TableRow)) {
+            throw new InvalidArgumentException('Incompatible node type: '.get_class($node));
         }
 
         $attrs = $node->data->get('attributes', []);
@@ -27,9 +28,9 @@ class TailwindTableRowRenderer implements NodeRendererInterface
         if ($parent instanceof TableSection && $parent->getType() === TableSection::TYPE_BODY) {
             $currentClasses = $attrs['class'] ?? '';
             $configuredClasses = config('tailwind_tables.tbody_row', '');
-            if (!empty($configuredClasses)) {
-                $attrs['class'] = trim($currentClasses . ' ' . $configuredClasses);
-            } elseif (empty($currentClasses) && !isset($attrs['class'])) {
+            if (! empty($configuredClasses)) {
+                $attrs['class'] = trim($currentClasses.' '.$configuredClasses);
+            } elseif (empty($currentClasses) && ! isset($attrs['class'])) {
                 // Ensure 'class' attribute is not present if no classes are defined
                 // HtmlElement handles this, so this might be overly cautious.
             }

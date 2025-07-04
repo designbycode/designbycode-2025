@@ -12,7 +12,6 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 
-
 class CustomFencedCodeExtension implements ExtensionInterface, NodeRendererInterface
 {
     public function register(EnvironmentBuilderInterface $environment): void
@@ -29,13 +28,11 @@ class CustomFencedCodeExtension implements ExtensionInterface, NodeRendererInter
             $attrs = $node->data->get('attributes', []);
             $infoWords = $node->getInfoWords();
 
-
             // Extract language from info string with extra safety
             $language = '';
             if (is_array($infoWords) && count($infoWords) > 0) {
                 $language = $infoWords[0] ?? '';
             }
-
 
             // Get the code content
             $code = $node->getLiteral() ?? '';
@@ -51,7 +48,7 @@ class CustomFencedCodeExtension implements ExtensionInterface, NodeRendererInter
                 'language' => $language ?: 'text',
                 'code' => $code,
                 'showCopy' => true,
-//                'slot' => $code // Also pass as slot for fallback
+                //                'slot' => $code // Also pass as slot for fallback
             ])->render();
 
         } catch (Exception $e) {
@@ -67,8 +64,8 @@ class CustomFencedCodeExtension implements ExtensionInterface, NodeRendererInter
     {
         $attributes = [];
 
-        if (!empty($language)) {
-            $attributes['class'] = 'language-' . $language;
+        if (! empty($language)) {
+            $attributes['class'] = 'language-'.$language;
         }
 
         // Merge any additional attributes
@@ -80,5 +77,4 @@ class CustomFencedCodeExtension implements ExtensionInterface, NodeRendererInter
             new HtmlElement('code', $attributes, htmlspecialchars($code))
         );
     }
-
 }

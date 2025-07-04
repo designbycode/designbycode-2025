@@ -21,19 +21,16 @@ class Menu
                 'name' => 'Tutorials',
                 'route' => 'posts.index',
                 'active' => 'posts.*',
-            ]
+            ],
         ];
+
         return static::colletor($items);
     }
 
-    /**
-     * @param $items
-     * @return Collection
-     */
     protected static function colletor($items): Collection
     {
         return collect($items)->map(function ($item) {
-            return (object)$item;
+            return (object) $item;
         });
     }
 }

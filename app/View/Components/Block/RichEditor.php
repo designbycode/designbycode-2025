@@ -13,8 +13,7 @@ class RichEditor extends Component
      */
     public function __construct(
         public string $content,
-    )
-    {
+    ) {
         //
     }
 

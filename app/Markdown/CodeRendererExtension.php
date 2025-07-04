@@ -12,7 +12,6 @@ use League\CommonMark\Renderer\NodeRendererInterface;
 
 class CodeRendererExtension implements ExtensionInterface, NodeRendererInterface
 {
-
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addRenderer(FencedCode::class, $this, 100);
