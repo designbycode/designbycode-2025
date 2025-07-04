@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Redis;
 class Post extends Model implements CanVisit
 {
     /** @use HasFactory<PostFactory> */
-    use HasFactory, SoftDeletes, HasVisits;
+    use HasFactory, HasVisits, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -52,14 +52,14 @@ class Post extends Model implements CanVisit
     public function estimatedReadTime(): Attribute
     {
         return Attribute::get(function () {
-            if (empty($this->content) || !is_array($this->content)) {
+            if (empty($this->content) || ! is_array($this->content)) {
                 return null;
             }
 
             $combinedText = '';
 
             foreach ($this->content as $block) {
-                if (!isset($block['type'], $block['data']['content'])) {
+                if (! isset($block['type'], $block['data']['content'])) {
                     continue;
                 }
 
@@ -69,11 +69,11 @@ class Post extends Model implements CanVisit
                     case 'markdown':
                     case 'prism':
                         // Keep markdown and code content as-is
-                        $combinedText .= ' ' . $content;
+                        $combinedText .= ' '.$content;
                         break;
                     case 'rich-editor':
                         // Strip HTML tags for rich text content
-                        $combinedText .= ' ' . strip_tags($content);
+                        $combinedText .= ' '.strip_tags($content);
                         break;
                     default:
                         break;

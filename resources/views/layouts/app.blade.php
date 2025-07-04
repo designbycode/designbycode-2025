@@ -18,6 +18,9 @@
     @filamentStyles
 </head>
 <body class="antialiased bg-background text-foreground flex flex-col pt-18 min-h-screen overflow-x-clip selection:bg-primary selection:text-white">
+<a href="#main" class="sr-only focus:not-sr-only">
+    Go to content
+</a>
 <x-navigation/>
 <div aria-hidden="true" class="fixed strips -z-10 left-0 opacity-5 w-1 md:w-10 inset-y-0 border-r border-foreground"></div>
 <div aria-hidden="true" class="fixed strips -z-10 right-0 opacity-5 w-1 md:w-10 inset-y-0 border-l border-foreground"></div>

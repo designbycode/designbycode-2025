@@ -19,7 +19,7 @@ test('posts index page returns a successful response', function () {
     $response->assertStatus(200);
 });
 
-//test('posts show page returns a successful response for existing post', function () {
+// test('posts show page returns a successful response for existing post', function () {
 //    $post = Post::factory()->create([
 //        'slug' => 'dummy-post-slug',
 //        'title' => 'Test Post',
@@ -28,7 +28,7 @@ test('posts index page returns a successful response', function () {
 //    $response = $this->get('/tutorials/' . $post->slug);
 //
 //    $response->assertStatus(200);
-//});
+// });
 
 test('posts show page returns a 404 for non-existing post', function () {
     $response = $this->get('/tutorials/non-existing-slug');
