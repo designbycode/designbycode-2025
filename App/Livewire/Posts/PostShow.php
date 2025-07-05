@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Pages\Posts;
+namespace App\Livewire\Posts;
 
 use App\Models\Post;
 use Illuminate\View\View;
@@ -19,6 +19,6 @@ class PostShow extends Component
 
     public function render(): View
     {
-        return view('livewire.pages.posts.post-show');
+        return view('livewire.posts.post-show');
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-use App\Livewire\Pages\AboutUsPage;
-use App\Livewire\Pages\HomePage;
-use App\Livewire\Pages\Posts\PostShow;
-use App\Livewire\Pages\Posts\PostsIndex;
+use App\Livewire\AboutUsPage;
+use App\Livewire\HomePage;
+use App\Livewire\Posts\PostShow;
+use App\Livewire\Posts\PostsIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class)->name('home');

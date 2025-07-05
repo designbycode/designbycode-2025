@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Pages\Posts;
+namespace App\Livewire\Posts;
 
 use App\Models\Post;
 use Livewire\Attributes\Url;
@@ -16,7 +16,7 @@ class PostsIndex extends Component
 
     public function render()
     {
-        return view('livewire.pages.posts.posts-index', [
+        return view('livewire.posts.posts-index', [
             'posts' => Post::search($this->search)->with('author')->withTotalVisitCount()->latest()->paginate(10),
         ]);
     }
