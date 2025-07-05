@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Pages\AboutUsPageController;
-use App\Http\Controllers\Pages\HomePageController;
-use App\Http\Controllers\Pages\Posts\PostsIndexController;
-use App\Http\Controllers\Pages\Posts\PostsShowController;
+use App\Livewire\Pages\AboutUsPage;
+use App\Livewire\Pages\HomePage;
+use App\Livewire\Pages\Posts\PostShow;
+use App\Livewire\Pages\Posts\PostsIndex;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomePageController::class)->name('home');
-Route::get('/about-us', AboutUsPageController::class)->name('about-us');
-Route::get('/tutorials', PostsIndexController::class)->name('posts.index');
-Route::get('/tutorials/{post:slug}', PostsShowController::class)->name('posts.show');
+Route::get('/', HomePage::class)->name('home');
+Route::get('/about-us', AboutUsPage::class)->name('about-us');
+Route::get('/tutorials', PostsIndex::class)->name('posts.index');
+Route::get('/tutorials/{post:slug}', PostShow::class)->name('posts.show');

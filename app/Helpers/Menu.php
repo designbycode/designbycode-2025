@@ -18,6 +18,11 @@ class Menu
                 'active' => 'home',
             ],
             [
+                'name' => 'About Us',
+                'route' => 'about-us',
+                'active' => 'about-us',
+            ],
+            [
                 'name' => 'Tutorials',
                 'route' => 'posts.index',
                 'active' => 'posts.*',
@@ -35,7 +40,7 @@ class Menu
     protected static function colletor($items): Collection
     {
         return collect($items)->map(function ($item) {
-            return (object) $item;
+            return (object)$item;
         });
     }
 }
