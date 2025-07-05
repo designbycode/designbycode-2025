@@ -15,11 +15,10 @@ class Index extends Component
     #[Url(history: true)]
     public ?string $search = '';
 
-
     public function render(): View
     {
         return view('livewire.pages.posts.index', [
-            'posts' => Post::search($this->search)->with('author')->withTotalVisitCount()->latest()->paginate(10)
+            'posts' => Post::search($this->search)->with('author')->withTotalVisitCount()->latest()->paginate(10),
         ]);
     }
 }

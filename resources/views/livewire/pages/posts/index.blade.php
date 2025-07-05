@@ -4,7 +4,6 @@
         <input class="pl-10 pr-2 py-2 my-2 rounded-md flex border border-primary focus:outline-primary focus:border-primary" type="text"
                wire:model.live="search">
     </div>
-
     <x-posts>
         @foreach($posts as $post)
             @if($loop->iteration % 5 == 0)

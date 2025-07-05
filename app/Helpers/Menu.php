@@ -22,11 +22,11 @@ class Menu
                 'route' => 'posts.index',
                 'active' => 'posts.*',
             ],
-//            [
-//                'name' => 'Tools',
-//                'route' => 'tools.favicon-converter',
-//                'active' => 'tools.*',
-//            ],
+            //            [
+            //                'name' => 'Tools',
+            //                'route' => 'tools.favicon-converter',
+            //                'active' => 'tools.*',
+            //            ],
         ];
 
         return static::colletor($items);
@@ -35,7 +35,7 @@ class Menu
     protected static function colletor($items): Collection
     {
         return collect($items)->map(function ($item) {
-            return (object)$item;
+            return (object) $item;
         });
     }
 }
