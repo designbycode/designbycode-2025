@@ -4,7 +4,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet asperiores corporis cupiditate dicta esse eveniet expedita facere molestiae
             mollitia
             odio quae quaerat, qui rerum sapiente vel, veniam, veritatis. Sunt!</p>
-        <livewire:pages.posts/>
+        <livewire:pages.posts.posts-index/>
 
     </div>
 </x-app-layout>

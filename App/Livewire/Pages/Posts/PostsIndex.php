@@ -8,7 +8,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Index extends Component
+class PostsIndex extends Component
 {
     use WithPagination;
 
@@ -17,7 +17,7 @@ class Index extends Component
 
     public function render(): View
     {
-        return view('livewire.pages.posts.index', [
+        return view('livewire.pages.posts.posts-index', [
             'posts' => Post::search($this->search)->with('author')->withTotalVisitCount()->latest()->paginate(10),
         ]);
     }
