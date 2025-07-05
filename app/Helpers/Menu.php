@@ -24,7 +24,7 @@ class Menu
             ],
             [
                 'name' => 'Tools',
-                'route' => 'tools.favicon-generator',
+                'route' => 'tools.favicon-converter',
                 'active' => 'tools.*',
 
             ],

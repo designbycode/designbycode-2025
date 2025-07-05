@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Redis;
 
 class Post extends Model implements CanVisit
 {
@@ -52,14 +51,14 @@ class Post extends Model implements CanVisit
     public function estimatedReadTime(): Attribute
     {
         return Attribute::get(function () {
-            if (empty($this->content) || ! is_array($this->content)) {
+            if (empty($this->content) || !is_array($this->content)) {
                 return null;
             }
 
             $combinedText = '';
 
             foreach ($this->content as $block) {
-                if (! isset($block['type'], $block['data']['content'])) {
+                if (!isset($block['type'], $block['data']['content'])) {
                     continue;
                 }
 
@@ -69,11 +68,11 @@ class Post extends Model implements CanVisit
                     case 'markdown':
                     case 'prism':
                         // Keep markdown and code content as-is
-                        $combinedText .= ' '.$content;
+                        $combinedText .= ' ' . $content;
                         break;
                     case 'rich-editor':
                         // Strip HTML tags for rich text content
-                        $combinedText .= ' '.strip_tags($content);
+                        $combinedText .= ' ' . strip_tags($content);
                         break;
                     default:
                         break;
@@ -87,13 +86,15 @@ class Post extends Model implements CanVisit
         });
     }
 
-    public function logView(): void
-    {
-        Redis::pfadd(sprintf('posts.%s.views', $this->id), [request()->ip()]);
-    }
 
-    public function getViewCount()
+    public function scopeSearch($query, $term)
     {
-        return Redis::pfcount(sprintf('posts.%s.views', $this->id));
+        $term = "%$term%";
+
+        return $query->where(function ($query) use ($term) {
+            $query->where('title', 'like', $term)
+                ->orWhere('description', 'like', $term);
+            // Add more fields as needed
+        });
     }
 }

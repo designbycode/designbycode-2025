@@ -10,12 +10,17 @@ import '../css/prism-okaidia.css';
 
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Intersect from '@alpinejs/intersect'
+import imageUploader from "@/tools/favicon-generator.js";
 
 document.addEventListener('livewire:navigated', () => {
     if (window.Prism) {
         Prism.highlightAll();
     }
 });
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('imageUploader', imageUploader)
+})
 
 // Optional: Load additional languages if needed
 

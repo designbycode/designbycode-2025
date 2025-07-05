@@ -1,94 +1,67 @@
-<div class="p-4 md:p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-lg">
-    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Favicon Generator</h2>
-
-    <form wire:submit.prevent="generateFavicons" class="space-y-6">
-        <div>
-            <label for="photo" class="block text-sm font-medium text-gray-700 mb-1">Upload Image (PNG, JPG, WebP)</label>
-            <input type="file" id="photo" wire:model="photo" accept="image/png, image/jpeg, image/webp"
-                   class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
-
-            <div wire:loading wire:target="photo" class="mt-2 text-sm text-gray-500">
-                Uploading image...
+<div x-data="imageUploader()" class="space-y-3">
+    <div class="px-2 py-3 bg-background rounded-xl shadow-sm  border border-foreground/5">
+        <form wire:submit.prevent="convertImage">
+            <div
+                    x-ref="dropzone"
+                    class="dropzone-area  border-2 border-dashed border-foreground/15 rounded-md p-4 min-h-30 grid place-items-center"
+                    :class="{ 'dragover border-primary': isDragging }"
+                    @dragover.prevent="isDragging = true"
+                    @dragleave.prevent="isDragging = false"
+                    @drop.prevent="handleDrop($event)"
+                    @click="$refs.fileInput.click()"
+            >
+                <template x-if="!image">
+                    <span class="text-gray-500 text-center px-4 py-2">Drag & drop an image or click to browse</span>
+                </template>
+                <template x-if="image">
+                    <img :src="image" alt="Preview" class="max-h-full max-w-full object-contain">
+                </template>
             </div>
 
-            @error('photo')
-                <p class="mt-2 text-xs text-red-600">{{ $message }}</p>
-            @enderror
-        </div>
+            <!-- Hidden file input -->
+            <input type="file" x-ref="fileInput" accept="image/*" @change="handleInputChange" class="hidden" wire:model="image">
 
-        @if ($photo && !$errors->has('photo'))
-            <div class="mt-4 text-center">
-                <img src="{{ $photo->temporaryUrl() }}" alt="Image Preview"
-                     class="inline-block max-w-[100px] max-h-[100px] border-2 border-gray-200 rounded-md shadow-sm">
+            <div class="mt-4 flex justify-between">
+                <button x-show="image" class="px-4 py-2 rounded-md text-white bg-primary hover:bg-primary/90" type="submit">Convert to Favicon</button>
+                <button
+                        x-show="image"
+                        x-cloak
+                        @click="removeImage"
+                        type="button"
+                        class="px-4 py-2 rounded-md text-white bg-red-500 hover:bg-red-500/90 "
+                >
+                    Remove Image
+                </button>
             </div>
-        @endif
+            @error('image') <span class="error">{{ $message }}</span> @enderror
+        </form>
+    </div>
 
-        @if ($feedbackMessage)
-            <div role="alert"
-                 class="p-3 rounded-md text-sm mt-4 @if(session('favicon_generation_complete') && !$errors->any()) bg-green-50 text-green-700 @elseif($errors->any() || Str::contains(strtolower($feedbackMessage), ['error', 'failed', 'must', 'not found'])) bg-red-50 text-red-700 @else bg-blue-50 text-blue-700 @endif">
-                {{ $feedbackMessage }}
+    @if ($convertedImages)
+        <div class="bg-foreground/5 rounded-lg p-4 animate-slide-down">
+            <div class="flex flex-wrap gap-6">
+                @foreach ($convertedImages as $img)
+                    <div class="flex flex-col items-center space-y-2">
+                        <img src="{{ $img['url'] }}" alt="{{ $img['name'] }}" class="w-16 h-16 object-contain border rounded-md shadow">
+                        <div class="text-xs text-center">{{ $img['name'] }}<br>{{ $img['size'] }}</div>
+                        <a href="{{ $img['url'] }}" download="{{ $img['name'] }}"
+                           class="bg-primary text-white rounded px-3 py-1 text-xs hover:bg-primary/90">Download</a>
+                    </div>
+                @endforeach
             </div>
-        @endif
-
-        @if (session()->has('message') && !$feedbackMessage)
-            <div class="p-3 rounded-md text-sm mt-4 bg-green-50 text-green-700">
-                {{ session('message') }}
-            </div>
-        @endif
-
-        @if (session()->has('error') && !$feedbackMessage)
-             <div class="p-3 rounded-md text-sm mt-4 bg-red-50 text-red-700">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <div>
-            <button type="submit" wire:loading.attr="disabled" wire:target="generateFavicons, photo"
-                    class="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 transition duration-150 ease-in-out">
-                <span wire:loading.remove wire:target="generateFavicons, photo">
-                    Generate Favicons
-                </span>
-                <span wire:loading wire:target="generateFavicons, photo">
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Generating...
-                </span>
-            </button>
-        </div>
-    </form>
-
-    @if (session('favicon_generation_complete'))
-        <div class="mt-6">
-            <button wire:click="downloadFaviconZip" wire:loading.attr="disabled" wire:target="downloadFaviconZip"
-                    class="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400 transition duration-150 ease-in-out">
-                <span wire:loading.remove wire:target="downloadFaviconZip">
-                    Download ZIP
-                </span>
-                <span wire:loading wire:target="downloadFaviconZip">
-                     <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Preparing Download...
-                </span>
-            </button>
         </div>
     @endif
 
-    <script>
-        document.addEventListener('livewire:load', function () {
-            // Optional: If you need to do something specific when generation is complete.
-            // Livewire's conditional rendering (@if) handles showing/hiding the download button.
-            window.addEventListener('generationComplete', event => {
-                console.log('Favicon generation complete event received.');
-                // Example: Scroll to download button if it's out of view
-                // const downloadButton = document.querySelector('button[wire\\:click="downloadFaviconZip"]');
-                // if (downloadButton) {
-                //    downloadButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // }
-            });
-        });
-    </script>
+    <div x-show="image" class="prose dark:prose-invert min-w-full animate-slide-down">
+        @markdown
+        ### Add the following code to the `head` of html document
+        ```html
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="shortcut icon" href="/favicon.ico">
+        ```
+        @endmarkdown
+    </div>
 </div>
