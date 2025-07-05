@@ -2,6 +2,7 @@
     <nav class="wrapper py-3 flex items-center justify-between transition-all ">
         <a class="text-2xl font-semibold hover:text-primary  duration-150" wire:navigate href="{{ route('home') }}">{{ config('app.name') }}</a>
         <div class="flex space-x-4 items-center text-sm group  duration-150">
+
             @foreach($menu as $key => $item)
                 <a wire:navigate.hover
                    @class([
@@ -10,6 +11,7 @@
                     'text-primary' => request()->routeIs($item->active),
                         ])
                    href="{{ route($item->route) }}">{{$item->name }}</a>
+
             @endforeach
 
             <!-- Theme Selector Dropdown -->
