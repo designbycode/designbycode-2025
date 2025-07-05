@@ -22,12 +22,11 @@ class Menu
                 'route' => 'posts.index',
                 'active' => 'posts.*',
             ],
-            [
-                'name' => 'Tools',
-                'route' => 'tools.favicon-converter',
-                'active' => 'tools.*',
-
-            ],
+//            [
+//                'name' => 'Tools',
+//                'route' => 'tools.favicon-converter',
+//                'active' => 'tools.*',
+//            ],
         ];
 
         return static::colletor($items);
