@@ -34,6 +34,7 @@
 
 
 @plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/forms';
 
 :root {
     --primary-color: var(--color-cyan-500);
