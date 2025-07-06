@@ -8,7 +8,6 @@ use Livewire\Component;
 
 class HomePage extends Component
 {
-
     #[Title('Home')]
     public function render(): View
     {

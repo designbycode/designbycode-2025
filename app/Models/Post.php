@@ -33,17 +33,11 @@ class Post extends Model implements CanVisit
         'published_at' => 'datetime',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * @return MorphToMany
-     */
     public function categories(): MorphToMany
     {
         return $this->morphToMany(Category::class, 'categorizable');
@@ -57,20 +51,17 @@ class Post extends Model implements CanVisit
         return json_decode($this->content, true) ?? [];
     }
 
-    /**
-     * @return Attribute
-     */
     public function estimatedReadTime(): Attribute
     {
         return Attribute::get(function () {
-            if (empty($this->content) || !is_array($this->content)) {
+            if (empty($this->content) || ! is_array($this->content)) {
                 return null;
             }
 
             $combinedText = '';
 
             foreach ($this->content as $block) {
-                if (!isset($block['type'], $block['data']['content'])) {
+                if (! isset($block['type'], $block['data']['content'])) {
                     continue;
                 }
 
@@ -80,11 +71,11 @@ class Post extends Model implements CanVisit
                     case 'markdown':
                     case 'prism':
                         // Keep markdown and code content as-is
-                        $combinedText .= ' ' . $content;
+                        $combinedText .= ' '.$content;
                         break;
                     case 'rich-editor':
                         // Strip HTML tags for rich text content
-                        $combinedText .= ' ' . strip_tags($content);
+                        $combinedText .= ' '.strip_tags($content);
                         break;
                     default:
                         break;
@@ -99,8 +90,6 @@ class Post extends Model implements CanVisit
     }
 
     /**
-     * @param $query
-     * @param $term
      * @return mixed
      */
     public function scopeSearch($query, $term)

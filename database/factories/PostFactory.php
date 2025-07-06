@@ -29,7 +29,7 @@ class PostFactory extends Factory
                 [
                     'type' => 'markdown',
                     'data' => [
-                        'content' => "\n\n\n### Tags  \nnpm, pnpm, Yarn, Bun, JavaScript, package managers, Node.js, web development"
+                        'content' => "\n\n\n### Tags  \nnpm, pnpm, Yarn, Bun, JavaScript, package managers, Node.js, web development",
                     ],
                 ],
             ],

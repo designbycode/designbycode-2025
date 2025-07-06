@@ -21,12 +21,8 @@ class PostsIndex extends Component
 
     public array $chunks = [];
 
-
     public function mount(): void
     {
-<<<<<<< HEAD
-        $this->chunks = Post::orderBy('id', 'desc')->pluck('id')->chunk(6)->toArray();
-=======
         $this->updateChunks();
     }
 
@@ -34,7 +30,7 @@ class PostsIndex extends Component
     {
         $query = Post::query();
 
-        if (!empty($this->search)) {
+        if (! empty($this->search)) {
             $query->search($this->search);
         }
 
@@ -45,45 +41,29 @@ class PostsIndex extends Component
     public function updatedSearch(): void
     {
         $this->updateChunks();
->>>>>>> loading-scroll
     }
 
-    /**
-     * @return void
-     */
     public function loadMore(): void
     {
-        if (!$this->hasMorePages()) {
+        if (! $this->hasMorePages()) {
             return;
         }
         $this->page++;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return bool
-     */
->>>>>>> loading-scroll
     public function hasMorePages(): bool
     {
         return $this->page < count($this->chunks);
     }
 
-    /**
-     * @return View
-     */
     public function render(): View
     {
         return view('livewire.pages.posts.posts-index');
     }
 
-<<<<<<< HEAD
-=======
     /**
-     * @return array{search: array{as: string}}
+     * @return array[]
      */
->>>>>>> loading-scroll
     protected function queryString(): array
     {
         return [

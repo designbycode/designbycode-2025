@@ -9,12 +9,9 @@ use Livewire\Component;
 class PostsShow extends Component
 {
     public object $post;
+
     public ?string $title;
 
-    /**
-     * @param Post $post
-     * @return void
-     */
     public function mount(Post $post): void
     {
         $this->post = $post->load('author');
@@ -24,13 +21,8 @@ class PostsShow extends Component
         });
     }
 
-    /**
-     * @return View
-     */
-
     public function render(): View
     {
         return view('livewire.pages.posts.posts-show')->title($this->post->title);
     }
-    
 }
