@@ -24,7 +24,24 @@ class PostsIndex extends Component
 
     public function mount(): void
     {
-        $this->chunks = Post::orderBy('id', 'desc')->pluck('id')->chunk(6)->toArray();
+        $this->updateChunks();
+    }
+
+    public function updateChunks(): void
+    {
+        $query = Post::query();
+
+        if (!empty($this->search)) {
+            $query->search($this->search);
+        }
+
+        $this->chunks = $query->orderBy('id', 'desc')->pluck('id')->chunk(6)->toArray();
+        $this->page = 1; // Reset page to 1 on new search or mount
+    }
+
+    public function updatedSearch(): void
+    {
+        $this->updateChunks();
     }
 
     /**
@@ -38,6 +55,9 @@ class PostsIndex extends Component
         $this->page++;
     }
 
+    /**
+     * @return bool
+     */
     public function hasMorePages(): bool
     {
         return $this->page < count($this->chunks);
@@ -51,6 +71,9 @@ class PostsIndex extends Component
         return view('livewire.pages.posts.posts-index');
     }
 
+    /**
+     * @return array{search: array{as: string}}
+     */
     protected function queryString(): array
     {
         return [

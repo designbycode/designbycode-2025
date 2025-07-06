@@ -15,9 +15,7 @@ class PostsChunk extends Component
     {
         return view('livewire.posts.posts-chunk', [
             'posts' => Post::query()
-                ->latest()
                 ->orderByRaw('FIELD(id, ' . implode(',', $this->ids) . ')')
-//                ->orderBy('id', 'desc')
                 ->whereIn('id', $this->ids)
                 ->with('author')
                 ->withTotalVisitCount()
