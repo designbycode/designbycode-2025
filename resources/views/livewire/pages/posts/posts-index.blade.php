@@ -7,32 +7,20 @@
         <input class="pl-10 pr-2 py-2 my-2 bg-background-lighter rounded-md flex border border-primary focus:outline-primary focus:border-primary" type="text"
                wire:model.live="search">
     </div>
-    <x-posts>
-        @for($chunk = 0; $chunk < $page; $chunk++)
-            <livewire:posts.posts-chunk :ids="$chunks[$chunk]" :key="$chunk"/>
-            <x-posts.ads/>
-        @endfor
-
-        @if($this->hasMorePages())
-            <x-posts.card-skeleton x-intersect.margin.300px="$wire.loadMore"/>
-        @endif
-    </x-posts>
-
-    {{--    @if($posts->count())--}}
-    {{--        <x-posts>--}}
-    {{--            @foreach($posts as $post)--}}
-    {{--                @if($loop->iteration % 5 == 0)--}}
-    {{--                    <x-posts.ads/>--}}
-    {{--                @endif--}}
-    {{--                <x-posts.card :$post/>--}}
-    {{--            @endforeach--}}
-    {{--        </x-posts>--}}
-    {{--        <button wire:click="loadMore" type="button">Load More</button>--}}
-    {{--    @else--}}
-    {{--        <div class="grid place-content-center min-h-32 ">--}}
-    {{--            <p class="text-lg">Not results found for--}}
-    {{--                <mark>{{ $search }}</mark>--}}
-    {{--            </p>--}}
-    {{--        </div>--}}
-    {{--    @endif--}}
+    @if($posts->count())
+        <x-posts>
+            @foreach($posts as $post)
+                @if($loop->iteration % 5 == 0)
+                    <x-posts.ads/>
+                @endif
+                <x-posts.card :$post/>
+            @endforeach
+        </x-posts>
+    @else
+        <div class="grid place-content-center min-h-32 ">
+            <p class="text-lg">Not results found for
+                <mark>{{ $search }}</mark>
+            </p>
+        </div>
+    @endif
 </div>
