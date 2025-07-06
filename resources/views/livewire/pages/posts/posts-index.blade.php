@@ -7,20 +7,28 @@
         <input class="pl-10 pr-2 py-2 my-2 bg-background-lighter rounded-md flex border border-primary focus:outline-primary focus:border-primary" type="text"
                wire:model.live="search">
     </div>
-    @if($posts->count())
+    @unless(empty($chunks))
         <x-posts>
-            @foreach($posts as $post)
-                @if($loop->iteration % 5 == 0)
-                    <x-posts.ads/>
-                @endif
-                <x-posts.card :$post/>
-            @endforeach
+            @for($chunk = 0; $chunk < $page; $chunk++)
+                <livewire:posts.posts-chunk :ids="$chunks[$chunk]" :key="$chunk"/>
+                <x-posts.ads/>
+            @endfor
+
+            @if($this->hasMorePages())
+                <x-posts.card-skeleton x-intersect.margin.300px="$wire.loadMore"/>
+            @endif
         </x-posts>
-    @else
+    @endunless
+    @if(empty($chunks) && !empty($search))
         <div class="grid place-content-center min-h-32 ">
-            <p class="text-lg">Not results found for
-                <mark>{{ $search }}</mark>
+            <p class="text-lg">No results found for
+                <mark class="bg-primary/20 text-primary font-semibold">{{ $search }}</mark>
+                .
             </p>
+        </div>
+    @elseif(empty($chunks) && empty($search))
+        <div class="grid place-content-center min-h-32 ">
+            <p class="text-lg">No posts available at the moment.</p>
         </div>
     @endif
 </div>
