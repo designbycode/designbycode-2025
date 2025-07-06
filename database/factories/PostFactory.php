@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -22,11 +21,18 @@ class PostFactory extends Factory
         $title = $this->faker->sentence;
 
         return [
-            'user_id' => User::factory(),
+            'user_id' => 1,
             'title' => $title,
             'slug' => Str::slug($title),
-            'content' => $this->faker->paragraphs(5, true),
-            'published_at' => $this->faker->optional()->dateTimeThisYear(),
+            'description' => $this->faker->sentence,
+            'content' => [
+                [
+                    'type' => 'markdown',
+                    'data' => [
+                        'content' => "\n\n\n### Tags  \nnpm, pnpm, Yarn, Bun, JavaScript, package managers, Node.js, web development"
+                    ],
+                ],
+            ],
         ];
     }
 }
