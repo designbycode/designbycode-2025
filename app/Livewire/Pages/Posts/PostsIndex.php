@@ -9,6 +9,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Title('Tutorials')]
 class PostsIndex extends Component
 {
     use WithPagination;
@@ -16,18 +17,41 @@ class PostsIndex extends Component
     #[Url(history: true)]
     public ?string $search = '';
 
+    public ?int $page = 1;
+
+    public array $chunks = [];
+
+
+    public function mount(): void
+    {
+        $this->chunks = Post::orderBy('id', 'desc')->pluck('id')->chunk(6)->toArray();
+    }
+
+    /**
+     * @return void
+     */
+    public function loadMore(): void
+    {
+        if (!$this->hasMorePages()) {
+            return;
+        }
+        $this->page++;
+    }
+
+    public function hasMorePages(): bool
+    {
+        return $this->page < count($this->chunks);
+    }
+
     /**
      * @return View
      */
-    #[Title('Tutorials')]
     public function render(): View
     {
-        return view('livewire.pages.posts.posts-index', [
-            'posts' => Post::search($this->search)->with(['author'])->withTotalVisitCount()->latest()->paginate(10),
-        ]);
+        return view('livewire.pages.posts.posts-index');
     }
 
-    protected function queryString()
+    protected function queryString(): array
     {
         return [
             'search' => [

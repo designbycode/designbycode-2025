@@ -28,5 +28,6 @@ document.addEventListener('alpine:init', () => {
 Alpine.plugin(Clipboard)
 Alpine.plugin(Intersect)
 
+
 window.Alpine = Alpine
 Livewire.start()
