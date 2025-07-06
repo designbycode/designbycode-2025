@@ -7,7 +7,6 @@
         <h1 class="text-5xl tracking-tight font-bold mb-4 text-balance text-foreground">
             {{ $post->title }}
         </h1>
-  
         <a href="#">
             {{ $post->author->name }}
         </a>
