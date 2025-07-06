@@ -2,11 +2,15 @@
 
 namespace App\Livewire\Pages;
 
+use Illuminate\View\View;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class HomePage extends Component
 {
-    public function render()
+
+    #[Title('Home')]
+    public function render(): View
     {
         return view('livewire.pages.home-page');
     }

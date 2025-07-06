@@ -1,4 +1,11 @@
-<div class="wrapper my-6">
+<div class="wrapper my-6 space-y-3">
+
+    <x-filament::breadcrumbs class="flex shrink-0" :breadcrumbs="[
+            '/' => 'Home',
+            '/tutorials' => 'Tutorials'
+        ]"/>
+
+
     <div @class(['prose prose-p:text-foreground prose-code:bg-background-darker prose-code:p-0.5 prose-code:rounded-md prose-headings:text-foreground-darker
         prose-strong:text-foreground-darker
         min-w-full space-y-6

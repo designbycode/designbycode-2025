@@ -98,7 +98,7 @@
     }
 
     hr {
-        @apply w-full h-2 opacity-10 outline-1 border border-foreground rounded-lg strips
+        @apply w-full h-2 opacity-10 outline-1 border border-foreground rounded-lg strips;
     }
 }
 

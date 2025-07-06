@@ -3,8 +3,11 @@
 namespace App\Livewire\Pages;
 
 use Illuminate\View\View;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+
+#[Title('About Us')]
 class AboutUsPage extends Component
 {
     /**
