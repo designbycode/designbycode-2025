@@ -19,6 +19,8 @@ class PostsIndex extends Component
 
     public ?int $page = 1;
 
+    public int $chunkSize = 6;
+
     public array $chunks = [];
 
     public function mount(): void
@@ -28,13 +30,21 @@ class PostsIndex extends Component
 
     public function updateChunks(): void
     {
-        $query = Post::query();
-
-        if (! empty($this->search)) {
-            $query->search($this->search);
+        if (!empty($this->search)) {
+            // Use Scout search when searching
+            $this->chunks = Post::search($this->search)
+                ->orderBy('id', 'desc')
+                ->get()
+                ->pluck('id')
+                ->toArray();
+        } else {
+            // Use a regular query when not searching
+            $this->chunks = Post::query()
+                ->orderBy('id', 'desc')
+                ->pluck('id')
+                ->toArray();
         }
 
-        $this->chunks = $query->orderBy('id', 'desc')->pluck('id')->chunk(6)->toArray();
         $this->page = 1; // Reset page to 1 on new search or mount
     }
 
@@ -45,7 +55,7 @@ class PostsIndex extends Component
 
     public function loadMore(): void
     {
-        if (! $this->hasMorePages()) {
+        if (!$this->hasMorePages()) {
             return;
         }
         $this->page++;
@@ -53,7 +63,20 @@ class PostsIndex extends Component
 
     public function hasMorePages(): bool
     {
-        return $this->page < count($this->chunks);
+        $totalChunks = count($this->getChunkedIds());
+        return $this->page < $totalChunks;
+    }
+
+    public function getChunkedIds(): array
+    {
+
+        return array_chunk($this->chunks, $this->chunkSize);
+    }
+
+    public function getCurrentChunks(): array
+    {
+        $chunkedIds = $this->getChunkedIds();
+        return array_slice($chunkedIds, 0, $this->page);
     }
 
     public function render(): View

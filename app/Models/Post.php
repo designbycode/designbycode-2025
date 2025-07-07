@@ -11,11 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
 
 class Post extends Model implements CanVisit
 {
     /** @use HasFactory<PostFactory> */
-    use HasFactory, HasVisits, SoftDeletes;
+    use HasFactory, HasVisits, SoftDeletes, Searchable;
 
     protected $fillable = [
         'title',
@@ -54,14 +56,14 @@ class Post extends Model implements CanVisit
     public function estimatedReadTime(): Attribute
     {
         return Attribute::get(function () {
-            if (empty($this->content) || ! is_array($this->content)) {
+            if (empty($this->content) || !is_array($this->content)) {
                 return null;
             }
 
             $combinedText = '';
 
             foreach ($this->content as $block) {
-                if (! isset($block['type'], $block['data']['content'])) {
+                if (!isset($block['type'], $block['data']['content'])) {
                     continue;
                 }
 
@@ -71,11 +73,11 @@ class Post extends Model implements CanVisit
                     case 'markdown':
                     case 'prism':
                         // Keep markdown and code content as-is
-                        $combinedText .= ' '.$content;
+                        $combinedText .= ' ' . $content;
                         break;
                     case 'rich-editor':
                         // Strip HTML tags for rich text content
-                        $combinedText .= ' '.strip_tags($content);
+                        $combinedText .= ' ' . strip_tags($content);
                         break;
                     default:
                         break;
@@ -89,17 +91,21 @@ class Post extends Model implements CanVisit
         });
     }
 
-    /**
-     * @return mixed
-     */
-    public function scopeSearch($query, $term)
-    {
-        $term = "%$term%";
 
-        return $query->where(function ($query) use ($term) {
-            $query->where('title', 'like', $term)
-                ->orWhere('description', 'like', $term);
-            // Add more fields as needed
-        });
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    #[SearchUsingPrefix(['id', 'title', 'content', 'description'])]
+//    #[SearchUsingFullText(['id', 'title', 'content'])]
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (int)$this->id,
+            'title' => (string)$this->title,
+            'description' => (string)$this->description,
+            'content' => (string)$this->content,
+        ];
     }
 }
