@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\Posts;
+namespace App\Livewire\Pages\Posts;
 
 use App\Models\Post;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class PostsChunk extends Component
+class Chunk extends Component
 {
     public array $ids = [];
 
@@ -18,7 +18,7 @@ class PostsChunk extends Component
 
     public function render(): View
     {
-        return view('livewire.posts.posts-chunk', [
+        return view('livewire.pages.posts.chunk', [
             'posts' => Post::query()
                 ->orderByRaw('FIELD(id, ' . implode(',', $this->ids) . ')')
                 ->whereIn('id', $this->ids)

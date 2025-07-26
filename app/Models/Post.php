@@ -30,7 +30,7 @@ class Post extends Model implements CanVisit
     ];
 
     protected $casts = [
-      
+        'content' => 'array',
         'live' => 'boolean',
         'published_at' => 'datetime',
     ];

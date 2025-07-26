@@ -25,7 +25,14 @@ class PostFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'description' => $this->faker->sentence,
-            'content' => '\n\n\n### Tags  \nnpm, pnpm, Yarn, Bun, JavaScript, package managers, Node.js, web development'
+            'content' => [
+                [
+                    'type' => 'markdown',
+                    'data' => [
+                        'content' => "\n\n\n### Tags  \nnpm, pnpm, Yarn, Bun, JavaScript, package managers, Node.js, web development"
+                    ],
+                ],
+            ],
         ];
     }
 }

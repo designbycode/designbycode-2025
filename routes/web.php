@@ -8,5 +8,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/about-us', AboutUsPage::class)->name('about-us');
-Route::get('/tutorials', PostsIndex::class)->name('posts.index');
-Route::get('/tutorials/{post:slug}', PostsShow::class)->name('posts.show');
+Route::get('/articles', PostsIndex::class)->name('posts.index');
+Route::get('/articles/{post:slug}', PostsShow::class)->name('posts.show');

@@ -188,7 +188,6 @@
     <div x-show="!monacoLoader" class="relative w-full h-full pt-10">
         <div x-ref="monacoEditorElement" class="w-full h-full opacity-75 pt-2"></div>
         {{-- Placeholder Text --}}
-
         <div
             x-show="monacoPlaceholder && monacoEditable"
             @click="monacoEditorFocus()"

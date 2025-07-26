@@ -9,7 +9,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Title('Tutorials')]
+#[Title('Articles')]
 class PostsIndex extends Component
 {
     use WithPagination;
@@ -69,7 +69,6 @@ class PostsIndex extends Component
 
     public function getChunkedIds(): array
     {
-
         return array_chunk($this->chunks, $this->chunkSize);
     }
 

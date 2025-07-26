@@ -37,7 +37,7 @@
 @plugin '@tailwindcss/forms';
 
 :root {
-    --primary-color: var(--color-cyan-500);
+    --primary-color: var(--color-sky-500);
 
     --background-color: var(--color-neutral-100);
     --background-color-lighter: var(--color-white);

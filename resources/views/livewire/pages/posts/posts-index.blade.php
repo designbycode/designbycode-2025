@@ -10,7 +10,7 @@
     @if(count($this->chunks) > 0)
         <x-posts>
             @foreach($this->getCurrentChunks() as $chunkIds)
-                <livewire:posts.posts-chunk :ids="$chunkIds" :key="md5(implode(',', $chunkIds))"/>
+                <livewire:pages.posts.chunk :ids="$chunkIds" :key="md5(implode(',', $chunkIds))"/>
                 <x-posts.ads style="animation-delay: {{ ($chunkSize + 1 ) * 0.1 }}s"/>
             @endforeach
 

@@ -1,3 +1,3 @@
 <div>
-    <!-- When there is no desire, all things are at peace. - Laozi -->
+    <img class="w-full rounded-md shadow-md" src="{{ '/storage/' . $url }}" alt="{{ $alt }}">
 </div>

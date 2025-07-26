@@ -6,11 +6,13 @@ import 'prismjs/components/prism-php';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
 import '../css/prism-okaidia.css';
-
+import themeSwitcher from "./theme-switcher.js";
 
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Intersect from '@alpinejs/intersect'
-import imageUploader from "@/tools/favicon-generator.js";
+import imageUploader from "./tools/favicon-generator.js";
+
+// import imageUploader from "@/tools/favicon-generator.js";
 
 document.addEventListener('livewire:navigated', () => {
     if (window.Prism) {
@@ -20,6 +22,7 @@ document.addEventListener('livewire:navigated', () => {
 
 document.addEventListener('alpine:init', () => {
     Alpine.data('imageUploader', imageUploader)
+    Alpine.data('themeSwitcher', themeSwitcher)
 })
 
 // Optional: Load additional languages if needed
