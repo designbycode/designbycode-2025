@@ -100,6 +100,24 @@
     hr {
         @apply w-full h-2 opacity-10 outline-1 border border-foreground rounded-lg strips;
     }
+
+    .slider::-webkit-slider-thumb {
+        appearance: none;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        cursor: pointer;
+        border: none;
+    }
 }
 
 @utility strips {

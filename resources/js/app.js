@@ -25,8 +25,6 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('themeSwitcher', themeSwitcher)
 })
 
-// Optional: Load additional languages if needed
-
 
 Alpine.plugin(Clipboard)
 Alpine.plugin(Intersect)
