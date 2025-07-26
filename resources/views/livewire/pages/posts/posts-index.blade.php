@@ -1,6 +1,6 @@
 <div class="wrapper my-6">
     <h1 class="text-5xl tracking-tight font-bold mb-4 text-balance text-foreground">
-        Tutorials
+        Articles
     </h1>
     <div class="flex justify-end mt-2 items-center">
         <x-heroicon-s-magnifying-glass class="size-5 translate-x-8 pointer-events-none"/>
