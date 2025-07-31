@@ -33,7 +33,7 @@ test('posts show page returns a successful response for existing post', function
                 ],
             ],
         ],
-        'user_id' => User::factory()->create()
+        'user_id' => User::factory()->create(),
     ]);
     $response = $this->get(route('posts.show', $post->slug));
 

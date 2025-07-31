@@ -11,7 +11,7 @@ import themeSwitcher from "./theme-switcher.js";
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Intersect from '@alpinejs/intersect'
 import imageUploader from "./tools/favicon-generator.js";
-
+import imageConverter from "./tools/image-converter.js";
 // import imageUploader from "@/tools/favicon-generator.js";
 
 document.addEventListener('livewire:navigated', () => {
@@ -23,6 +23,7 @@ document.addEventListener('livewire:navigated', () => {
 document.addEventListener('alpine:init', () => {
     Alpine.data('imageUploader', imageUploader)
     Alpine.data('themeSwitcher', themeSwitcher)
+    Alpine.data('imageConverter', imageConverter)
 })
 
 

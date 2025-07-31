@@ -30,7 +30,7 @@ class PostsIndex extends Component
 
     public function updateChunks(): void
     {
-        if (!empty($this->search)) {
+        if (! empty($this->search)) {
             // Use Scout search when searching
             $this->chunks = Post::search($this->search)
                 ->orderBy('id', 'desc')
@@ -55,7 +55,7 @@ class PostsIndex extends Component
 
     public function loadMore(): void
     {
-        if (!$this->hasMorePages()) {
+        if (! $this->hasMorePages()) {
             return;
         }
         $this->page++;
@@ -64,6 +64,7 @@ class PostsIndex extends Component
     public function hasMorePages(): bool
     {
         $totalChunks = count($this->getChunkedIds());
+
         return $this->page < $totalChunks;
     }
 
@@ -75,6 +76,7 @@ class PostsIndex extends Component
     public function getCurrentChunks(): array
     {
         $chunkedIds = $this->getChunkedIds();
+
         return array_slice($chunkedIds, 0, $this->page);
     }
 

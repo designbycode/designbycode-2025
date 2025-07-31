@@ -9,17 +9,19 @@ use Illuminate\Support\Facades\File;
 class CleanupConvertedImages extends Command
 {
     protected $signature = 'images:cleanup {--hours=24 : Hours after which to delete converted images}';
+
     protected $description = 'Clean up old converted images from storage';
 
     public function handle(): int
     {
-        $hours = (int)$this->option('hours');
+        $hours = (int) $this->option('hours');
         $cutoffTime = Carbon::now()->subHours($hours);
 
         $convertedPath = storage_path('app/public/converted');
 
-        if (!File::exists($convertedPath)) {
+        if (! File::exists($convertedPath)) {
             $this->info('Converted images directory does not exist.');
+
             return self::SUCCESS;
         }
 

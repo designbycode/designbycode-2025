@@ -8,27 +8,34 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\Image\Image;
 
-class ImageConverter extends Component
+class ImageConverterOld extends Component
 {
     use WithFileUploads;
 
     public $image;
+
     public ?string $originalFormat = null;
+
     public ?string $originalSize = null;
+
     public ?string $originalDimensions = null;
+
     public string $targetFormat = 'jpg';
+
     public int $quality = 85;
+
     public bool $isProcessing = false;
+
     public int $sepiaValue = 0;
+
     public int $grayscaleValue = 0;
-    public int $blurValue = 0;
-    public int $brightnessValue = 100;
-    public int $contrastValue = 100;
-    public int $saturateValue = 100;
-    public int $hueRotateValue = 0;
+
     public int $pixelateValue = 0;
-    public string $downloadFormat = 'png';
+
+    public int $blurValue = 0;
+
     public ?string $convertedImagePath = null;
+
     public ?string $originalFileName = null;
 
     protected array $rules = [
@@ -46,7 +53,7 @@ class ImageConverter extends Component
     public function updatedTargetFormat(): void
     {
         // Reset quality to default when format changes
-        if (!in_array($this->targetFormat, ['jpg', 'jpeg', 'webp'])) {
+        if (! in_array($this->targetFormat, ['jpg', 'jpeg', 'webp'])) {
             $this->quality = 85;
         }
     }
@@ -63,7 +70,6 @@ class ImageConverter extends Component
 
         if ($this->image) {
             $this->analyzeImage();
-            $this->dispatch('image-updated', image: $this->image->temporaryUrl());
         }
     }
 
@@ -78,7 +84,7 @@ class ImageConverter extends Component
                 throw new Exception('Unable to get image information');
             }
 
-            $this->originalDimensions = $imageInfo[0] . ' × ' . $imageInfo[1] . ' px';
+            $this->originalDimensions = $imageInfo[0].' × '.$imageInfo[1].' px';
             $this->originalFormat = strtoupper(pathinfo($this->image->getClientOriginalName(), PATHINFO_EXTENSION));
             $this->originalSize = $this->formatBytes($this->image->getSize());
             $this->originalFileName = pathinfo($this->image->getClientOriginalName(), PATHINFO_FILENAME);
@@ -94,12 +100,12 @@ class ImageConverter extends Component
     {
         $units = ['B', 'KB', 'MB', 'GB'];
 
-        $size = (float)$bytes;
+        $size = (float) $bytes;
         for ($i = 0; $size > 1024 && $i < count($units) - 1; $i++) {
             $size /= 1024;
         }
 
-        return round($size, $precision) . ' ' . $units[$i];
+        return round($size, $precision).' '.$units[$i];
     }
 
     public function convertImage(): void
@@ -110,18 +116,18 @@ class ImageConverter extends Component
 
         try {
             // Create unique filename
-            $filename = $this->originalFileName . '_converted_' . time() . '.' . $this->targetFormat;
-            $outputPath = 'converted/' . $filename;
+            $filename = $this->originalFileName.'_converted_'.time().'.'.$this->targetFormat;
+            $outputPath = 'converted/'.$filename;
 
             // Get temporary path
             $tempPath = $this->image->getRealPath();
 
             // Save to storage
-            $fullOutputPath = storage_path('app/public/' . $outputPath);
+            $fullOutputPath = storage_path('app/public/'.$outputPath);
 
             // Ensure directory exists
             $directory = dirname($fullOutputPath);
-            if (!is_dir($directory)) {
+            if (! is_dir($directory)) {
                 mkdir($directory, 0755, true);
             }
 
@@ -135,28 +141,16 @@ class ImageConverter extends Component
 
             // Apply filters
             if ($this->sepiaValue > 0) {
-                $image->sepia($this->sepiaValue);
+                $image->sepia();
             }
             if ($this->grayscaleValue > 0) {
                 $image->greyscale();
             }
-            if ($this->blurValue > 0) {
-                $image->blur($this->blurValue);
-            }
-            if ($this->brightnessValue !== 100) {
-                $image->brightness($this->brightnessValue - 100);
-            }
-            if ($this->contrastValue !== 100) {
-                $image->contrast($this->contrastValue - 100);
-            }
-            if ($this->saturateValue !== 100) {
-                // Spatie Image does not have a saturate method, so we skip this
-            }
-            if ($this->hueRotateValue !== 0) {
-                // Spatie Image does not have a hueRotate method, so we skip this
-            }
             if ($this->pixelateValue > 0) {
                 $image->pixelate($this->pixelateValue);
+            }
+            if ($this->blurValue > 0) {
+                $image->blur($this->blurValue);
             }
 
             // Save with the target format (the extension in filename determines format)
@@ -165,7 +159,7 @@ class ImageConverter extends Component
             $this->convertedImagePath = $outputPath;
 
         } catch (Exception $e) {
-            $this->addError('conversion', 'Failed to convert image: ' . $e->getMessage());
+            $this->addError('conversion', 'Failed to convert image: '.$e->getMessage());
         } finally {
             $this->isProcessing = false;
         }
@@ -173,41 +167,17 @@ class ImageConverter extends Component
 
     public function download()
     {
-        $fullPath = storage_path('app/public/' . $this->convertedImagePath);
+        $fullPath = storage_path('app/public/'.$this->convertedImagePath);
 
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             $this->addError('download', 'Converted file not found.');
+
             return;
         }
 
-        $downloadName = $this->originalFileName . '_converted.' . $this->downloadFormat;
+        $downloadName = $this->originalFileName.'_converted.'.$this->targetFormat;
 
         return response()->download($fullPath, $downloadName);
-    }
-
-    public function applyPreset($preset)
-    {
-        switch ($preset) {
-            case 'vintage':
-                $this->sepiaValue = 80;
-                $this->brightnessValue = 110;
-                $this->contrastValue = 120;
-                break;
-            case 'bw':
-                $this->grayscaleValue = 100;
-                $this->contrastValue = 130;
-                break;
-            case 'vivid':
-                $this->saturateValue = 150;
-                $this->contrastValue = 120;
-                $this->brightnessValue = 110;
-                break;
-            case 'dreamy':
-                $this->blurValue = 3;
-                $this->brightnessValue = 120;
-                $this->saturateValue = 80;
-                break;
-        }
     }
 
     public function resetConverter(): void
@@ -218,18 +188,10 @@ class ImageConverter extends Component
             'originalSize',
             'originalDimensions',
             'convertedImagePath',
-            'originalFileName'
+            'originalFileName',
         ]);
         $this->targetFormat = 'jpg';
         $this->quality = 85;
-        $this->sepiaValue = 0;
-        $this->grayscaleValue = 0;
-        $this->blurValue = 0;
-        $this->brightnessValue = 100;
-        $this->contrastValue = 100;
-        $this->saturateValue = 100;
-        $this->hueRotateValue = 0;
-        $this->pixelateValue = 0;
     }
 
     public function render(): View

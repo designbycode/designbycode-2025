@@ -3,16 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>{{ isset($title) ? $title . ' | ' . config('app.name') : config('app.name') }}</title>
-
-
     <style>
         [x-cloak] {
             display: none !important;
         }
     </style>
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @filamentStyles
