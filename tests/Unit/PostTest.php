@@ -150,13 +150,13 @@ it('calculates estimated read time for rich-editor content', function () {
     $content = [
         [
             'type' => 'rich-editor',
-            'data' => ['content' => '<p>'.str_repeat('word ', 200).'</p>'], // 200 words
+            'data' => ['content' => '<p>' . str_repeat('word ', 200) . '</p>'], // 200 words
         ],
     ];
 
     $post = Post::factory()->create(['content' => $content]);
 
-    expect($post->estimatedReadTime)->toBe(1.0); // 200 words / 200 wpm = 1 minute
+    expect($post->estimatedReadTime)->toBe(1); // 200 words / 200 wpm = 1 minute
 });
 
 it('handles blocks without proper structure in estimated read time', function () {
@@ -170,7 +170,7 @@ it('handles blocks without proper structure in estimated read time', function ()
 
     $post = Post::factory()->create(['content' => $content]);
 
-    expect($post->estimatedReadTime)->toBe(1.0); // Only counts valid blocks
+    expect($post->estimatedReadTime)->toBe(1); // 200 words / 200 wpm = 1 minute
 });
 
 it('can be soft deleted', function () {

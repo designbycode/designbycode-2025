@@ -12,8 +12,12 @@
             {{ $post->title }}
         </h1>
 
-        <a href="#" class="text-foreground">
-            {{ $post->author->name }}
+        <a href="#" class="text-foreground flex space-x-2 items-center">
+            <x-avatar :author="$post->author"/>
+            <span>
+                {{ $post->author->name }}
+            </span>
+
         </a>
 
         <p class="text-foreground">

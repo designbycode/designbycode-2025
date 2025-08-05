@@ -64,14 +64,14 @@ class Post extends Model implements CanVisit
     public function estimatedReadTime(): Attribute
     {
         return Attribute::get(function () {
-            if (empty($this->content) || ! is_array($this->content)) {
+            if (empty($this->content) || !is_array($this->content)) {
                 return null;
             }
 
             $combinedText = '';
 
             foreach ($this->content as $block) {
-                if (! isset($block['type'], $block['data']['content'])) {
+                if (!isset($block['type'], $block['data']['content'])) {
                     continue;
                 }
 
@@ -81,11 +81,11 @@ class Post extends Model implements CanVisit
                     case 'markdown':
                     case 'prism':
                         // Keep Markdown and code content as-is
-                        $combinedText .= ' '.$content;
+                        $combinedText .= ' ' . $content;
                         break;
                     case 'rich-editor':
                         // Strip HTML tags for rich text content
-                        $combinedText .= ' '.strip_tags($content);
+                        $combinedText .= ' ' . strip_tags($content);
                         break;
                     default:
                         break;
@@ -95,7 +95,7 @@ class Post extends Model implements CanVisit
             $wpm = 200;
             $wordCount = str_word_count($combinedText);
 
-            return ceil($wordCount / $wpm);
+            return (int)ceil($wordCount / $wpm);
         });
     }
 
@@ -108,9 +108,9 @@ class Post extends Model implements CanVisit
     public function toSearchableArray(): array
     {
         return [
-            'id' => (int) $this->id,
-            'title' => (string) $this->title,
-            'description' => (string) $this->description,
+            'id' => (int)$this->id,
+            'title' => (string)$this->title,
+            'description' => (string)$this->description,
             //            'content' => (string)$this->content,
         ];
     }

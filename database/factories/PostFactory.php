@@ -33,7 +33,7 @@ class PostFactory extends Factory
                 [
                     'type' => 'markdown',
                     'data' => [
-                        'content' => "\n\n\n### Tags  \nnpm, pnpm, Yarn, Bun, JavaScript, package managers, Node.js, web development",
+                        'content' => $this->faker->paragraph(random_int(15, 30)),
                     ],
                 ],
             ],
