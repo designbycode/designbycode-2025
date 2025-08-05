@@ -33,6 +33,9 @@ class PostForm
                     Builder::make('content')
                         ->reorderable(true)
                         ->reorderableWithButtons()
+                        ->default([
+                            ['type' => 'markdown'],
+                        ])
                         ->blocks([
                             Builder\Block::make('rich-editor')
                                 ->schema([

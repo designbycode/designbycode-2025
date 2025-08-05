@@ -100,6 +100,36 @@
     hr {
         @apply w-full h-2 opacity-10 outline-1 border border-foreground rounded-lg strips;
     }
+
+    .headroom {
+        will-change: transform; /* Optimize for animation */
+        transition: transform 0.5s ease-in-out; /* Smooth transition */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+
+    /* Styles when the element is pinned (visible) */
+    .headroom--pinned {
+        transform: translateY(0%);
+    }
+
+    /* Styles when the element is unpinned (hidden) */
+    .headroom--unpinned {
+        transform: translateY(-100%); /* Slide up and out of view */
+    }
+
+    /* Optional: Styles for when the page is at the very top */
+    .headroom--top {
+        /* Example: Add a shadow only when not at the top */
+        box-shadow: none;
+    }
+
+    .headroom--not-top {
+        @apply shadow-sm shadow-primary/25;
+    }
 }
 
 @utility strips {

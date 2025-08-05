@@ -1,4 +1,5 @@
-<div x-data="navigation()" class="fixed top-0 inset-x-1 md:inset-x-10 z-50 backdrop-blur-sm bg-background/90 border-b border-background-darker/10">
+<div x-data="navigation()" x-headroom="{ offset: 100, tolerance: 10 }"
+     class=" fixed top-0 inset-x-1 md:inset-x-10 z-50 backdrop-blur-sm bg-background/90 border-b border-background-darker/10">
     <nav class="wrapper py-3 flex items-center justify-between transition-all ">
         <a class="text-2xl font-semibold hover:text-primary " wire:navigate href="{{ route('home') }}">{{ config('app.name') }}</a>
 
@@ -12,7 +13,6 @@
                    ])
                    href="{{ route($item->route) }}">{{ $item->name }}</a>
             @endforeach
-
             <!-- Theme Selector Dropdown -->
             <x-navigation.theme-switcher/>
             <!-- End Theme Selector Dropdown -->
@@ -71,6 +71,4 @@
             mobileMenuOpen: false,
         }
     }
-
-
 </script>

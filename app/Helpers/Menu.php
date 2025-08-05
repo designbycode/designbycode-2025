@@ -40,7 +40,7 @@ class Menu
     protected static function colletor($items): Collection
     {
         return collect($items)->map(function ($item) {
-            return (object)$item;
+            return (object) $item;
         });
     }
 }

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Post;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -21,15 +23,17 @@ class PostFactory extends Factory
         $title = $this->faker->sentence;
 
         return [
-            'user_id' => 1,
+            'user_id' => User::factory()->create(),
             'title' => $title,
             'slug' => Str::slug($title),
             'description' => $this->faker->sentence,
+            'live' => true,
+            'published_at' => Carbon::now(),
             'content' => [
                 [
                     'type' => 'markdown',
                     'data' => [
-                        'content' => "\n\n\n### Tags  \nnpm, pnpm, Yarn, Bun, JavaScript, package managers, Node.js, web development"
+                        'content' => "\n\n\n### Tags  \nnpm, pnpm, Yarn, Bun, JavaScript, package managers, Node.js, web development",
                     ],
                 ],
             ],

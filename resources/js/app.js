@@ -11,7 +11,7 @@ import themeSwitcher from "./theme-switcher.js";
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Intersect from '@alpinejs/intersect'
 import imageUploader from "./tools/favicon-generator.js";
-
+import './headroom.js'
 // import imageUploader from "@/tools/favicon-generator.js";
 
 document.addEventListener('livewire:navigated', () => {

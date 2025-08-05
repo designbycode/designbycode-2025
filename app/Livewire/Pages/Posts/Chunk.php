@@ -15,12 +15,11 @@ class Chunk extends Component
         $this->ids = $ids;
     }
 
-
     public function render(): View
     {
         return view('livewire.pages.posts.chunk', [
             'posts' => Post::query()
-                ->orderByRaw('FIELD(id, ' . implode(',', $this->ids) . ')')
+                ->orderByRaw('FIELD(id, '.implode(',', $this->ids).')')
                 ->whereIn('id', $this->ids)
                 ->with('author')
                 ->withTotalVisitCount()
