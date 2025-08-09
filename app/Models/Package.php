@@ -7,6 +7,8 @@ use Coderflex\Laravisit\Concerns\HasVisits;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -14,7 +16,7 @@ use Spatie\Tags\HasTags;
 
 class Package extends Model implements HasMedia
 {
-    use HasFactory, HasReadTime, HasTags, HasVisits, InteractsWithMedia, SoftDeletes;
+    use HasFactory, HasReadTime, HasTags, HasVisits, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -30,6 +32,22 @@ class Package extends Model implements HasMedia
     protected $casts = [
         'content' => 'array',
     ];
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    #[SearchUsingPrefix(['id', 'name', 'description'])]
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (int)$this->id,
+            'name' => (string)$this->title,
+            'description' => (string)$this->description,
+            //            'content' => (string)$this->content,
+        ];
+    }
 
     public function registerMediaCollections(): void
     {

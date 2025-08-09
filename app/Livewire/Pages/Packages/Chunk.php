@@ -18,14 +18,11 @@ class Chunk extends Component
     public function render(): View
     {
         return view('livewire.pages.packages.chunk', [
-            [
-                'packages' => Package::query()
-                    ->orderByRaw('FIELD(id, '.implode(',', $this->ids).')')
-                    ->whereIn('id', $this->ids)
-                    ->with('author')
-//                    ->withTotalVisitCount()
-                    ->get(),
-            ],
+            'packages' => Package::query()
+                ->orderByRaw('FIELD(id, ' . implode(',', $this->ids) . ')')
+                ->whereIn('id', $this->ids)
+                ->withTotalVisitCount()
+                ->get(),
         ]);
     }
 }

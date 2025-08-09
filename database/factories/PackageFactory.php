@@ -16,7 +16,14 @@ class PackageFactory extends Factory
             'name' => $this->faker->name(),
             'slug' => $this->faker->slug(),
             'description' => $this->faker->text(),
-            'content' => $this->faker->word(),
+            'content' => [
+                [
+                    'type' => 'markdown',
+                    'data' => [
+                        'content' => $this->faker->paragraph(random_int(15, 30)),
+                    ],
+                ],
+            ],
             'type' => array_rand(['npm', 'php']),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
