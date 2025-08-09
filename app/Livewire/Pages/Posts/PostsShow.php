@@ -14,6 +14,11 @@ class PostsShow extends Component
 
     public function mount(Post $post): void
     {
+
+        if (! $post->live) {
+            abort(404);
+        }
+
         $this->post = $post->load('author');
 
         defer(function () {

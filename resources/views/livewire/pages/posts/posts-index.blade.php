@@ -18,5 +18,8 @@
                 <x-posts.card-skeleton x-intersect.margin.300px="$wire.loadMore"/>
             @endif
         </x-posts>
+    @else
+        <h2 class="text-2xl font-bold">Sorry no posts found.</h2>
+        <p>Don't worry come back later for some awesome content.</p>
     @endif
 </div>

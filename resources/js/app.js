@@ -11,8 +11,9 @@ import themeSwitcher from "./theme-switcher.js";
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Intersect from '@alpinejs/intersect'
 import imageUploader from "./tools/favicon-generator.js";
-import './headroom.js'
+// import './headroom.js'
 // import imageUploader from "@/tools/favicon-generator.js";
+import Headroom from "@designbycode/alpine-headroom";
 
 document.addEventListener('livewire:navigated', () => {
     if (window.Prism) {
@@ -27,7 +28,8 @@ document.addEventListener('alpine:init', () => {
 
 // Optional: Load additional languages if needed
 
-
+// Alpine.plugin(AlpineDebug)
+Alpine.plugin(Headroom)
 Alpine.plugin(Clipboard)
 Alpine.plugin(Intersect)
 

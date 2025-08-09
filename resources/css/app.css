@@ -119,6 +119,7 @@
     /* Styles when the element is unpinned (hidden) */
     .headroom--unpinned {
         transform: translateY(-100%); /* Slide up and out of view */
+
     }
 
     /* Optional: Styles for when the page is at the very top */

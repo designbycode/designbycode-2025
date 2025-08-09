@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\Posts\Schemas;
+namespace App\Filament\Resources\Packages\Schemas;
 
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\CodeEditor;
 use Filament\Forms\Components\CodeEditor\Enums\Language;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
@@ -14,34 +13,43 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
-class PostForm
+class PackageForm
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
                 SpatieMediaLibraryFileUpload::make('featured_image')
-                    ->collection('posts')
-                    ->columnSpanFull()
+                    ->collection('packages')
                     ->multiple(false)
+                    ->columnSpanFull()
                     ->image(),
+
                 Section::make()->schema([
-                    TextInput::make('title')
+                    TextInput::make('name')
                         ->unique(ignoreRecord: true)
                         ->required(),
+
                     Textarea::make('description')
-                        ->rows(5)
-                        ->autosize()
                         ->columnSpanFull(),
+
                     SpatieTagsInput::make('tags')
                         ->splitKeys(['Tab', ' '])
-                        ->type('posts'),
+                        ->type('packages'),
+
+                    Select::make('type')
+                        ->options([
+                            'alpine' => 'Alpine',
+                            'tailwindcss' => 'Tailwind CSS',
+                            'typescript' => 'Typescript',
+                        ])
+                        ->required(),
+
                     Builder::make('content')
                         ->reorderable(true)
                         ->reorderableWithButtons()
@@ -96,9 +104,7 @@ class PostForm
                                         ->required(),
                                 ]),
                         ]),
-                    Toggle::make('live')
-                        ->required(),
-                    DateTimePicker::make('published_at'),
+
                 ])->columnSpanFull(),
             ]);
     }

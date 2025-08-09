@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Traits\HasReadTime;
 use Coderflex\Laravisit\Concerns\CanVisit;
 use Coderflex\Laravisit\Concerns\HasVisits;
 use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,11 +14,15 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Tags\HasTags;
 
-class Post extends Model implements CanVisit
+class Post extends Model implements CanVisit, HasMedia
 {
     /** @use HasFactory<PostFactory> */
-    use HasFactory, HasVisits, Searchable, SoftDeletes;
+    use HasFactory, HasReadTime, HasTags, HasVisits, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -61,44 +65,6 @@ class Post extends Model implements CanVisit
         return json_decode($this->content, true) ?? [];
     }
 
-    public function estimatedReadTime(): Attribute
-    {
-        return Attribute::get(function () {
-            if (empty($this->content) || !is_array($this->content)) {
-                return null;
-            }
-
-            $combinedText = '';
-
-            foreach ($this->content as $block) {
-                if (!isset($block['type'], $block['data']['content'])) {
-                    continue;
-                }
-
-                $content = $block['data']['content'];
-
-                switch ($block['type']) {
-                    case 'markdown':
-                    case 'prism':
-                        // Keep Markdown and code content as-is
-                        $combinedText .= ' ' . $content;
-                        break;
-                    case 'rich-editor':
-                        // Strip HTML tags for rich text content
-                        $combinedText .= ' ' . strip_tags($content);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            $wpm = 200;
-            $wordCount = str_word_count($combinedText);
-
-            return (int)ceil($wordCount / $wpm);
-        });
-    }
-
     /**
      * Get the indexable data array for the model.
      *
@@ -108,10 +74,34 @@ class Post extends Model implements CanVisit
     public function toSearchableArray(): array
     {
         return [
-            'id' => (int)$this->id,
-            'title' => (string)$this->title,
-            'description' => (string)$this->description,
+            'id' => (int) $this->id,
+            'title' => (string) $this->title,
+            'description' => (string) $this->description,
             //            'content' => (string)$this->content,
         ];
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->width(600)
+            ->height(400);
+
+        $this
+            ->addMediaConversion('main')
+            ->width(1200)
+            ->height(800);
+    }
+
+    /**
+     * Define the static media collections. Note that the dynamic
+     * collections from the Builder block don't need to be defined here.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('posts')
+            ->useFallbackUrl('https://placehold.co/600x400');
     }
 }

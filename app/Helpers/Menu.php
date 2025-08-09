@@ -27,6 +27,11 @@ class Menu
                 'route' => 'posts.index',
                 'active' => 'posts.*',
             ],
+            [
+                'name' => 'Packages',
+                'route' => 'packages.index',
+                'active' => 'packages.*',
+            ],
             //            [
             //                'name' => 'Tools',
             //                'route' => 'tools.favicon-converter',

@@ -37,7 +37,7 @@ class User extends Authenticatable
 
     public function avatar(): string
     {
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name);
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name);
     }
 
     /**

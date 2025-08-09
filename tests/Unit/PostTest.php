@@ -150,7 +150,7 @@ it('calculates estimated read time for rich-editor content', function () {
     $content = [
         [
             'type' => 'rich-editor',
-            'data' => ['content' => '<p>' . str_repeat('word ', 200) . '</p>'], // 200 words
+            'data' => ['content' => '<p>'.str_repeat('word ', 200).'</p>'], // 200 words
         ],
     ];
 

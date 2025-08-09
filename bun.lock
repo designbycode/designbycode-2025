@@ -4,8 +4,9 @@
     "": {
       "dependencies": {
         "@alpinejs/intersect": "^3.14.9",
+        "@designbycode/alpine-debug": "^1.0.0",
+        "@designbycode/alpine-headroom": "^1.0.6",
         "@ryangjchandler/alpine-clipboard": "^2.3.0",
-        "headroom.js": "^0.12.0",
         "prismjs": "^1.30.0",
       },
       "devDependencies": {
@@ -27,6 +28,10 @@
     "@ampproject/remapping": ["@ampproject/remapping@2.3.0", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.5", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw=="],
 
     "@defstudio/vite-livewire-plugin": ["@defstudio/vite-livewire-plugin@2.0.6", "", { "dependencies": { "minimatch": "^9.0.3", "vite-plugin-full-reload": "^1.1.0" }, "peerDependencies": { "vite": "^6.0.2" } }, "sha512-Oi4EZ51xTqnsUu9+FrGwe8cIWfgoCYNfJ+MNPHVLHSCewMSp6csx224QqlmwcGXOO8KeoYkqd2K4Wju8XSZAQA=="],
+
+    "@designbycode/alpine-debug": ["@designbycode/alpine-debug@1.0.0", "", {}, "sha512-yNsfwguYN0VXo49kMUXm2E9rsNleyUKBD7KDyLY0U93RruMpaf/6rrkB2wemO65fJdZ4OVQa4k8pf9mNPAzR2Q=="],
+
+    "@designbycode/alpine-headroom": ["@designbycode/alpine-headroom@1.0.6", "", {}, "sha512-ZoIynfQ7kLZNM/69x/aCSqnfmm8lNTALfie63nuhqB8duZITuknmZe4wLMivcOo8a43UpLMvhcWS2RL0Wd5oew=="],
 
     "@esbuild/aix-ppc64": ["@esbuild/aix-ppc64@0.25.5", "", { "os": "aix", "cpu": "ppc64" }, "sha512-9o3TMmpmftaCMepOdA5k/yDw8SfInyzWWTjYTFCX3kPSDJMROQTb8jg+h9Cnwnmm1vOzvxN7gIfB5V2ewpjtGA=="],
 
@@ -247,8 +252,6 @@
     "has-tostringtag": ["has-tostringtag@1.0.2", "", { "dependencies": { "has-symbols": "^1.0.3" } }, "sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw=="],
 
     "hasown": ["hasown@2.0.2", "", { "dependencies": { "function-bind": "^1.1.2" } }, "sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ=="],
-
-    "headroom.js": ["headroom.js@0.12.0", "", {}, "sha512-iXnAafUm3FdzfJ91uixLws2hkKI1jC8bAKK/pt7XYr8Ie1jO7xbK48Ycpl9tUPyBgkzuj1p/PhJS0fy4E/5anA=="],
 
     "is-fullwidth-code-point": ["is-fullwidth-code-point@3.0.0", "", {}, "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg=="],
 

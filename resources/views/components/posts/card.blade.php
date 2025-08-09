@@ -1,6 +1,6 @@
 @props(['post'])
 
-<div {{ $attributes->merge(['class' => 'post-item my-4 p-4 relative slide-in  rounded-lg space-y-2 group isolate transition-all duration-150']) }}>
+<div {{ $attributes->merge(['class' => 'post-item my-4 p-4 relative slide-in rounded-lg space-y-2 group isolate transition-all duration-150']) }}>
     <h2 class="text-md font-semibold text-balance">
         <a wire:navigate.hover href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
     </h2>
@@ -22,7 +22,6 @@
                             class="group-hover:border group-hover:border-foreground/10 group-hover:bg-foreground/5 absolute inset-0 rounded-lg -z-10
                             pointer-events-none"></span>
             <span>Read more</span>
-            {{--                            <x-heroicon-s-chevron-double-right class="size-3 ml-0.5 text-white"/>--}}
         </a>
     </div>
 </div>

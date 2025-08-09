@@ -13,6 +13,8 @@
         "ext-zip": "*",
         "coderflexx/laravisit": "^2.1",
         "filament/filament": "^4.0",
+        "filament/spatie-laravel-media-library-plugin": "^v4.0.0-beta23",
+        "filament/spatie-laravel-tags-plugin": "^v4.0.0-beta23",
         "graham-campbell/markdown": "^16.0",
         "laravel/framework": "^12.0",
         "laravel/scout": "^10.15",

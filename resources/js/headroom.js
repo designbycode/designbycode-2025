@@ -1,4 +1,3 @@
-// headroomPlugin.js
 document.addEventListener('alpine:init', () => {
     Alpine.directive('headroom', (el, {modifiers, expression}, {evaluate, cleanup}) => {
         let lastScrollY = 0;
