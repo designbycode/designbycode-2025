@@ -11,7 +11,8 @@
         <div
             class="border border-primary/10 mb-3 rounded-lg relative">
 
-            <img class="rounded-lg  m-0! max-w-full block" src="{{ $post->getFirstMediaUrl('posts', 'main') }}" alt="Featured Image for {{ $post->title }}">
+            <img class="rounded-lg w-full  m-0! max-w-full block" src="{{ $post->getFirstMediaUrl('posts', 'main') }}" alt="Featured Image for {{ $post->title
+            }}">
         </div>
 
 

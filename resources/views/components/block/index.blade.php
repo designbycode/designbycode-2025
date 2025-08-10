@@ -26,7 +26,7 @@
                     component="{{ str('block.'.$block['type'])->lower() }}"
                     :attachment="$block['data']['attachment'] ?? []"
                     :alt="$block['data']['alt'] ?? ''"
-                    :collection="$block['data']['collection'] ?? ''"
+                    :blockId="$block['data']['block_id'] ?? ''"
                     class="mt-4 "/>
                 @break
             @default

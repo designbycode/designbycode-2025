@@ -17,12 +17,12 @@ class SpatieImage extends Component
     public function __construct(
         public array  $attachment,
         public string $alt,
-        public string $collection,
+        public string $blockId,
     )
     {
         $this->images = Media::query()
             ->whereIn('uuid', $this->attachment)
-            ->where('collection_name', $this->collection)
+            ->whereRaw("json_extract(custom_properties, '$.block_id') = ?", [$this->blockId])
             ->get();
     }
 

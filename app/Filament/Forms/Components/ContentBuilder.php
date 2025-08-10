@@ -82,6 +82,11 @@ class ContentBuilder
                     ->schema([
                         SpatieMediaLibraryFileUpload::make('attachment')
                             ->collection($contentCollectionName)
+                            ->customProperties(function (Get $get) {
+                                return [
+                                    'block_id' => $get('block_id'),
+                                ];
+                            })
                             ->multiple()
                             ->reorderable()
                             ->panelLayout('grid')
@@ -89,8 +94,8 @@ class ContentBuilder
                         TextInput::make('alt')
                             ->label('Alt text')
                             ->required(),
-                        Hidden::make('collection')
-                            ->default($contentCollectionName),
+                        Hidden::make('block_id')
+                            ->default(fn() => 'block-' . Str::uuid()),
                     ]),
             ]);
     }
