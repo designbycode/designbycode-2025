@@ -21,6 +21,14 @@
                     :alt="$block['data']['alt']"
                     class="mt-4 "/>
                 @break
+            @case('spatie-image')
+                <x-dynamic-component
+                    component="{{ str('block.'.$block['type'])->lower() }}"
+                    :attachment="$block['data']['attachment'] ?? []"
+                    :alt="$block['data']['alt'] ?? ''"
+                    :collection="$block['data']['collection'] ?? ''"
+                    class="mt-4 "/>
+                @break
             @default
                 <div>Block not found</div>
         @endswitch

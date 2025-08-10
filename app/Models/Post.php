@@ -74,9 +74,9 @@ class Post extends Model implements CanVisit, HasMedia
     public function toSearchableArray(): array
     {
         return [
-            'id' => (int) $this->id,
-            'title' => (string) $this->title,
-            'description' => (string) $this->description,
+            'id' => (int)$this->id,
+            'title' => (string)$this->title,
+            'description' => (string)$this->description,
             //            'content' => (string)$this->content,
         ];
     }

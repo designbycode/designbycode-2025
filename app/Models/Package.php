@@ -49,23 +49,27 @@ class Package extends Model implements HasMedia
         ];
     }
 
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->width(600)
+            ->height(400);
+
+        $this
+            ->addMediaConversion('main')
+            ->width(1200)
+            ->height(800);
+    }
+
+    /**
+     * Define the static media collections. Note that the dynamic
+     * collections from the Builder block don't need to be defined here.
+     */
     public function registerMediaCollections(): void
     {
         $this
-            ->addMediaCollection('posts')
-            ->useFallbackUrl('https://placehold.co/600x400')
-            ->useFallbackUrl('https://placehold.co/600x400', 'preview')
-            ->useFallbackUrl('https://placehold.co/1200x800', 'main')
-            ->registerMediaConversions(function (Media $media) {
-                $this
-                    ->addMediaConversion('preview')
-                    ->width(600)
-                    ->height(400);
-
-                $this
-                    ->addMediaConversion('main')
-                    ->width(1200)
-                    ->height(800);
-            });
+            ->addMediaCollection('packages')
+            ->useFallbackUrl('https://placehold.co/600x400');
     }
 }

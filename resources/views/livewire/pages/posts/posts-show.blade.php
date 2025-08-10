@@ -8,6 +8,13 @@
         min-w-full space-y-6
         prose-h1:text-2xl
         md:prose-h1:text-4xl'])>
+        <div
+            class="border border-primary/10 mb-3 rounded-lg relative">
+
+            <img class="rounded-lg  m-0! max-w-full block" src="{{ $post->getFirstMediaUrl('posts', 'main') }}" alt="Featured Image for {{ $post->title }}">
+        </div>
+
+
         <h1 class="text-5xl tracking-tight font-bold mb-4 text-balance text-foreground">
             {{ $post->title }}
         </h1>

@@ -12,6 +12,6 @@ class PackageSeeder extends Seeder
     {
         Package::factory()
             ->state(new Sequence(fn($sequence) => ['created_at' => now()->subDays($sequence->index), 'updated_at' => now()->subDays($sequence->index)]))
-            ->times(40)->create();
+            ->times(3)->create();
     }
 }
