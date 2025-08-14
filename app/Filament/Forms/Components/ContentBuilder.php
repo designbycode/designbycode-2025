@@ -92,10 +92,7 @@ class ContentBuilder
                             ->required(),
                         Hidden::make('block_id'),
                     ])
-                    ->mutateDataUsing(function (array $data): array {
-                        $data['block_id'] = $data['block_id'] ?? 'block-' . Str::uuid();
-                        return $data;
-                    }),
+      
             ]);
     }
 }
