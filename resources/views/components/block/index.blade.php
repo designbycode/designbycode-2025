@@ -23,6 +23,7 @@
                 @break
             @case('spatie-image')
                 <x-dynamic-component
+                    :model="$model"
                     component="{{ str('block.'.$block['type'])->lower() }}"
                     :attachment="$block['data']['attachment'] ?? []"
                     :alt="$block['data']['alt'] ?? ''"

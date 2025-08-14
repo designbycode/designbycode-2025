@@ -20,6 +20,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+//        DB::listen(function ($query) {
+//            // $query->sql contains the SQL statement
+//            // $query->bindings contains the parameters
+//            // $query->time contains execution time in ms
+//            logger()->info('Query executed: ' . $query->sql, [
+////                'bindings' => $query->bindings,
+////                'time' => $query->time,
+//            ]);
+//        });
+
         Schema::defaultStringLength(191);
     }
 }

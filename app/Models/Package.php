@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -53,11 +54,13 @@ class Package extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
+            ->fit(Fit::Crop, 600, 400)
             ->width(600)
             ->height(400);
 
         $this
             ->addMediaConversion('main')
+            ->fit(Fit::Crop, 1200, 800)
             ->width(1200)
             ->height(800);
     }
@@ -71,5 +74,7 @@ class Package extends Model implements HasMedia
         $this
             ->addMediaCollection('packages')
             ->useFallbackUrl('https://placehold.co/600x400');
+
+        $this->addMediaCollection('packages_content');
     }
 }

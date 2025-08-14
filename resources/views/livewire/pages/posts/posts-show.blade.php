@@ -29,6 +29,7 @@
             Published: {{ $post->published_at->diffForHumans() }}
         </p>
         <p class="text-foreground/25">Estimate time to read is {{ $post->estimatedReadTime }} {{ Str::plural('minute', $post->estimatedReadTime) }}</p>
-        <x-block :content="$post->content"/>
+        <x-block :content="$post->content" :model="$post"/>
+
     </div>
 </div>

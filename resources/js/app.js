@@ -14,6 +14,7 @@ import imageUploader from "./tools/favicon-generator.js";
 // import './headroom.js'
 // import imageUploader from "@/tools/favicon-generator.js";
 import Headroom from "@designbycode/alpine-headroom";
+import CountUp from "@designbycode/alpine-countup";
 
 document.addEventListener('livewire:navigated', () => {
     if (window.Prism) {
@@ -29,6 +30,7 @@ document.addEventListener('alpine:init', () => {
 // Optional: Load additional languages if needed
 
 // Alpine.plugin(AlpineDebug)
+Alpine.plugin(CountUp)
 Alpine.plugin(Headroom)
 Alpine.plugin(Clipboard)
 Alpine.plugin(Intersect)

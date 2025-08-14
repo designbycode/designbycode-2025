@@ -12,8 +12,11 @@ class Index extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public $content
-    ) {}
+        public $content,
+        public $model,
+    )
+    {
+    }
 
     /**
      * Get the view / contents that represent the component.

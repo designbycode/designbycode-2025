@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -85,11 +86,13 @@ class Post extends Model implements CanVisit, HasMedia
     {
         $this
             ->addMediaConversion('preview')
+            ->fit(Fit::Crop, 600, 400)
             ->width(600)
             ->height(400);
 
         $this
             ->addMediaConversion('main')
+            ->fit(Fit::Crop, 1200, 800)
             ->width(1200)
             ->height(800);
     }
@@ -103,5 +106,7 @@ class Post extends Model implements CanVisit, HasMedia
         $this
             ->addMediaCollection('posts')
             ->useFallbackUrl('https://placehold.co/600x400');
+
+        $this->addMediaCollection('posts_content');
     }
 }

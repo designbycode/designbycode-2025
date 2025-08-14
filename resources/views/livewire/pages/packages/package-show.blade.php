@@ -17,6 +17,6 @@
         </p>
 
         <p class="text-foreground/25">Estimate time to read is {{ $package->estimatedReadTime }} {{ Str::plural('minute', $package->estimatedReadTime) }}</p>
-        <x-block :content="$package->content"/>
+        <x-block :content="$package->content" :model="$package"/>
     </div>
 </div>
