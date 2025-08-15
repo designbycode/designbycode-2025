@@ -11,7 +11,6 @@
 
         <div
             class="border border-primary/10 mb-3 rounded-lg relative">
-
             <img class="rounded-lg w-full  m-0! max-w-full block" src="{{ $package->getFirstMediaUrl('packages', 'main') }}" alt="Featured Image for {{
             $package->title
             }}">

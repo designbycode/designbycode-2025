@@ -81,8 +81,17 @@ class ContentBuilder
                 Builder\Block::make('spatie-image')
                     ->schema([
                         SpatieMediaLibraryFileUpload::make('attachment')
-                            ->collection($contentCollectionName)
-                            ->customProperties(fn(Get $get) => ['block_id' => $get('block_id')])
+                            ->collection(function (Get $get) {
+                                // Get the collection name from the block data
+                                $collectionName = $get('collection_name');
+
+                                // If no collection name exists, generate a new one
+                                if (empty($collectionName)) {
+                                    return 'block-' . Str::uuid();
+                                }
+
+                                return $collectionName;
+                            })
                             ->multiple()
                             ->reorderable()
                             ->panelLayout('grid')
@@ -90,9 +99,20 @@ class ContentBuilder
                         TextInput::make('alt')
                             ->label('Alt text')
                             ->required(),
-                        Hidden::make('block_id'),
+                        Hidden::make('collection_name')
+                            ->default(function (Get $get) {
+                                // Only generate new UUID if collection_name doesn't exist
+                                $existingCollection = $get('collection_name');
+                                return $existingCollection ?: 'block-' . Str::uuid();
+                            })
+                            ->dehydrated()
+                            ->afterStateHydrated(function (Set $set, Get $get, $state) {
+                                // Ensure we have a collection name when loading existing data
+                                if (empty($state)) {
+                                    $set('collection_name', 'block-' . Str::uuid());
+                                }
+                            }),
                     ])
-      
             ]);
     }
 }
