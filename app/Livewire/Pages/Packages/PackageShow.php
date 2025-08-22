@@ -21,6 +21,6 @@ class PackageShow extends Component
 
     public function render(): View
     {
-        return view('livewire.pages.packages.package-show');
+        return view('livewire.pages.packages.package-show')->title($this->package->name);
     }
 }
