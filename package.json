@@ -19,9 +19,9 @@
     },
     "dependencies": {
         "@alpinejs/intersect": "^3.14.9",
-        "@designbycode/alpine-countup": "^1.0.1",
+        "@designbycode/alpine-countup": "^1.1.1",
         "@designbycode/alpine-debug": "^1.0.0",
-        "@designbycode/alpine-headroom": "^1.0.6",
+        "@designbycode/alpine-headroom": "^1.0.7",
         "@ryangjchandler/alpine-clipboard": "^2.3.0",
         "prismjs": "^1.30.0"
     }

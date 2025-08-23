@@ -4,9 +4,10 @@ namespace App\View\Components\Block;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
-class SpatieImage extends Component
+class Images extends Component
 {
     public $images;
 
@@ -17,7 +18,7 @@ class SpatieImage extends Component
         public array  $attachment,
         public string $alt,
         public string $blockId,
-        public        $model,
+        public Model  $model,
     )
     {
         $query = $this->model->media();
@@ -36,6 +37,6 @@ class SpatieImage extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.block.spatie-image');
+        return view('components.block.images');
     }
 }

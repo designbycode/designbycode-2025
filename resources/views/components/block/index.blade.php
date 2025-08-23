@@ -21,7 +21,7 @@
                     :alt="$block['data']['alt']"
                     class="mt-4 "/>
                 @break
-            @case('spatie-image')
+            @case('images')
                 <x-dynamic-component
                     :model="$model"
                     component="{{ str('block.'.$block['type'])->lower() }}"

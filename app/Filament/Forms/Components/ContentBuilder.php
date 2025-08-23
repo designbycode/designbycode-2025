@@ -78,18 +78,18 @@ class ContentBuilder
                             ->label('Alt text')
                             ->required(),
                     ]),
-                Builder\Block::make('spatie-image')
+                Builder\Block::make('images')
                     ->schema([
                         SpatieMediaLibraryFileUpload::make('attachment')
+                            ->disk('public')
+                            ->visibility('public')
                             ->collection(function (Get $get) {
                                 // Get the collection name from the block data
                                 $collectionName = $get('collection_name');
-
                                 // If no collection name exists, generate a new one
                                 if (empty($collectionName)) {
                                     return 'block-' . Str::uuid();
                                 }
-
                                 return $collectionName;
                             })
                             ->multiple()
