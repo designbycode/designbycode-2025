@@ -12,7 +12,7 @@ class PackageShow extends Component
 
     public function mount(Package $package): void
     {
-        $this->package = $package;
+        $this->package = $package->load('user', 'media');
 
         defer(function () {
             $this->package->visit();

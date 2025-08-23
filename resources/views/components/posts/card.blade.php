@@ -14,7 +14,7 @@
                             <x-heroicon-o-clock class="size-3 "/>
                             <i>Time to read is {{ $post->estimatedReadTime }} {{ Str::plural('minute', $post->estimatedReadTime) }}</i>
                         </span>
-        <span class="text-foreground/50">Unique Views ({{ $post->visit_count_total     }})</span>
+        <span class="text-foreground/50">Unique Views ({{ $post->visit_count_total }})</span>
         <a wire:navigate.hover href="{{ route('posts.show', $post) }}" class="text-white rounded-md px-4 py-2 bg-primary  hover:bg-primary/75
                         inline-flex
                         items-center ">

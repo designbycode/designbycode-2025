@@ -15,21 +15,16 @@ class Images extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public array  $attachment,
         public string $alt,
-        public string $blockId,
+        public string $collectionName,
         public Model  $model,
     )
     {
-        $query = $this->model->media();
-
-        if ($this->blockId) {
-            $query->whereRaw("json_extract(custom_properties, '$.block_id') = ?", [$this->blockId]);
+        if ($this->collectionName) {
+            $this->images = $this->model->getMedia($this->collectionName);
         } else {
-            $query->whereIn('uuid', $this->attachment);
+            $this->images = collect();
         }
-
-        $this->images = $query->orderBy('order_column')->get();
     }
 
     /**

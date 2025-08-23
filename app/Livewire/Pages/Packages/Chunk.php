@@ -21,6 +21,7 @@ class Chunk extends Component
             'packages' => Package::query()
                 ->orderByRaw('FIELD(id, ' . implode(',', $this->ids) . ')')
                 ->whereIn('id', $this->ids)
+                ->with('user')
                 ->withTotalVisitCount()
                 ->get(),
         ]);

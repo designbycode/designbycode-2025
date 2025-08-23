@@ -1,16 +1,14 @@
 <div x-data>
     <x-hero/>
-    <div class="wrapper">
+
+    <div class="wrapper text-6xl font-black grid grid-cols-3">
         <div x-countup="{end: 2000}">0</div>
         <div x-countup="{end: 1000}">0</div>
         <span x-countup="{
-        start: 50,
-        end: 5100,
-        duration: 2500,
-        prefix: '$',
-        suffix: ' USD',
-        decimals: 2,
-        tolerance: 150
+        end: 100,
+        suffix: '%',
+        decimals: 0,
+        tolerance: 0
     }"></span>
     </div>
 </div>

@@ -18,7 +18,7 @@ class PostsShow extends Component
         if (!$post->live) {
             abort(404);
         }
-        $this->post = $post->load('author', 'media');
+        $this->post = $post->load('user', 'media');
 
         defer(function () {
             $this->post->visit();

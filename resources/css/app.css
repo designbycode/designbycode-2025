@@ -37,7 +37,7 @@
 @plugin '@tailwindcss/forms';
 
 :root {
-    --primary-color: var(--color-sky-500);
+    --primary-color: var(--color-sky-400);
 
     --background-color: var(--color-neutral-100);
     --background-color-lighter: var(--color-white);
@@ -131,6 +131,8 @@
     .headroom--not-top {
         @apply shadow-sm shadow-primary/25;
     }
+
+
 }
 
 @utility strips {

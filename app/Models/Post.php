@@ -41,14 +41,9 @@ class Post extends Model implements CanVisit, HasMedia
         'published_at' => 'datetime',
     ];
 
-    public function author(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function categories(): MorphToMany
-    {
-        return $this->morphToMany(Category::class, 'categorizable');
     }
 
     // Scope to filter posts that are live and already published

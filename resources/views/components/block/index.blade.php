@@ -25,13 +25,10 @@
                 <x-dynamic-component
                     :model="$model"
                     component="{{ str('block.'.$block['type'])->lower() }}"
-                    :attachment="$block['data']['attachment'] ?? []"
                     :alt="$block['data']['alt'] ?? ''"
-                    :blockId="$block['data']['block_id'] ?? ''"
+                    :collectionName="$block['data']['collection_name'] ?? ''"
                     class="mt-4 "/>
                 @break
-            @default
-                <div>Block not found</div>
         @endswitch
     @endforeach
 

@@ -20,9 +20,9 @@ class Chunk extends Component
         return view('livewire.pages.posts.chunk', [
             'posts' => Post::query()
                 ->live()
-                ->orderByRaw('FIELD(id, '.implode(',', $this->ids).')')
+                ->orderByRaw('FIELD(id, ' . implode(',', $this->ids) . ')')
                 ->whereIn('id', $this->ids)
-                ->with('author')
+                ->with('user')
                 ->withTotalVisitCount()
                 ->get(),
         ]);

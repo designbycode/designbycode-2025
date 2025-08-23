@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Traits\HasReadTime;
+use Coderflex\Laravisit\Concerns\CanVisit;
 use Coderflex\Laravisit\Concerns\HasVisits;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
@@ -15,7 +17,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
 
-class Package extends Model implements HasMedia
+class Package extends Model implements CanVisit, HasMedia
 {
     use HasFactory, HasReadTime, HasTags, HasVisits, InteractsWithMedia, Searchable, SoftDeletes;
 
@@ -33,6 +35,11 @@ class Package extends Model implements HasMedia
     protected $casts = [
         'content' => 'array',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     /**
      * Get the indexable data array for the model.

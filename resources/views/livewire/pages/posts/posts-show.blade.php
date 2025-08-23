@@ -20,9 +20,9 @@
             {{ $post->title }}
         </h1>
         <a href="#" class="text-foreground flex space-x-2 items-center">
-            <x-avatar :author="$post->author"/>
+            <x-avatar :author="$post->user"/>
             <span>
-                {{ $post->author->name }}
+                {{ $post->user->name }}
             </span>
         </a>
         <p class="text-foreground">

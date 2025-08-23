@@ -11,10 +11,10 @@ import themeSwitcher from "./theme-switcher.js";
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Intersect from '@alpinejs/intersect'
 import imageUploader from "./tools/favicon-generator.js";
-// import './headroom.js'
 // import imageUploader from "@/tools/favicon-generator.js";
 import Headroom from "@designbycode/alpine-headroom";
 import CountUp from "@designbycode/alpine-countup";
+
 
 document.addEventListener('livewire:navigated', () => {
     if (window.Prism) {
@@ -27,7 +27,6 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('themeSwitcher', themeSwitcher)
 })
 
-// Optional: Load additional languages if needed
 
 // Alpine.plugin(AlpineDebug)
 Alpine.plugin(CountUp)

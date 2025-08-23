@@ -8,14 +8,7 @@ use Illuminate\Support\ServiceProvider;
 
 class PostServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
-    public function register(): void
-    {
-        //
-    }
-
+ 
     /**
      * Bootstrap services.
      */

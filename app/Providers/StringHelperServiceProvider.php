@@ -7,13 +7,6 @@ use Illuminate\Support\Str;
 
 class StringHelperServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
-    public function register(): void
-    {
-        //
-    }
 
     /**
      * Bootstrap services.
